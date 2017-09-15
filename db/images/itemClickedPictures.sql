@@ -1,0 +1,1 @@
+SELECT * FROM pictures WHERE prodid = $1
