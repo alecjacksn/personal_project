@@ -133,6 +133,7 @@ class AllAlexa extends Component {
                 <Link to='/cart'><button>Cart</button></Link>
                 <Link to='/lights'><button>Lights</button></Link>
                 <Link to='/google'><button>GOOGLE</button></Link>
+                <Link to='/homekit'><button>HomeKit</button></Link>
                 <div>
                     {theRender}
 

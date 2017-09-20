@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 // import aws from 'aws-lib'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import Slider from '../components/slider/ImageSlider'
-import {updateProductid} from '../ducks/reducer'
-import {connect} from 'react-redux'
-
+// import Slider from '../components/slider/ImageSlider'
+import { updateProductid } from '../ducks/reducer'
+import { connect } from 'react-redux'
+import 'semantic-ui-css/semantic.min.css'
+import { Button, Icon } from 'semantic-ui-react'
 
 
 // import amazon from 'amazon-product-api'
@@ -27,10 +28,9 @@ class AWS extends Component {
         super();
 
         this.state = {
-            books: [],
+            items: [],
             images: [],
             productidClicked: ''
-            
 
         }
     }
@@ -38,9 +38,9 @@ class AWS extends Component {
 
     componentDidMount() {
         axios.get('http://localhost:3232/api/products').then(res => {
-            // console.log("component mount test: ", res) 
+            console.log("component mount test: ", res)
             this.setState({
-                books: res.data,
+                items: res.data,
 
             })
         })
@@ -59,16 +59,16 @@ class AWS extends Component {
         var theImages = this.state.images
         for (var i = 0; i < theImages.length; i++) {
             if (theImages[i].prodid === e.productid) {
-                var x = <img className="teeeee"src={theImages[i].mediumimage} />
+                var x = <img className="teeeee" src={theImages[i].mediumimage} alt="" />
                 // newArray.push(theImages[i])
             }
         }
-            return (x)
-            // (
-            //     <Slider images={newArray} >
-            //     {newArray.slice(0).reverse().map((image, key) => <div key={key}><img src={image.mediumimage} alt="" /></div>)}
-            //   </Slider>
-            // )
+        return (x)
+        // (
+        //     <Slider images={newArray} >
+        //     {newArray.slice(0).reverse().map((image, key) => <div key={key}><img src={image.mediumimage} alt="" /></div>)}
+        //   </Slider>
+        // )
         // })
     }
 
@@ -204,63 +204,61 @@ class AWS extends Component {
 
 
 
+    // activateSearchbox(el) {
+    //     el.classList.add('searchbox--active')
+    // }
+    // deactivateSearchbox(el) {
+    //     el.classList.remove('searchbox--active')
+    // }
 
 
+    // onBlur() {
+    //     deactivateSearchbox(document.querySelector('.searchbox'));
+    // }
 
+    // const items = [
+    //     {
+    //       childKey: 0,
+    //       image: '/assets/images/wireframe/image.png',
+    //       header: 'Header',
+    //       description: 'Description',
+    //       meta: 'Metadata',
+    //       extra: 'Extra',
+    //     },
 
     displayListings() {
-        var display = this.state.books;
-        
+        var display = this.state.items;
+
         return display.map((e, i) => {
             return (<div key={i}>
-                <div>
-                    <h3>Location: {i + 1}</h3>
+                <div className="mapped-products">
                     <div>
-                    {/* <Link to='/item'><button  onClick={() => this.props.updateProductid(e.productid)}> Product Id: {e.productid} </button></Link> */}
-                        <br />
-                        ASIN: {e.asin} <br />
-                        <br />
-                        OfferListingId: {e.offerlistingid}
-                        <br />
-                        <br />
-                        {e.color ? 'Color: ' + e.color : null}
-                        <br />
-                        <br />
-                        {e.brand ? 'Brand: ' + e.brand : null}
-                        <br />
-                        <br />
-                        <Link to={`/item/${e.productid}`} ><a href="" onClick={() => this.props.updateProductid(e.productid)}>{e.title} </a></Link><br />
-                        <br />
-                        Price: {e.price}
-                        <br />
-
-                        <div>
-                            {this.imageFunction(e)}
+                        <div className="mapped-info">
+                            <div className="mapped-basic-info">
+                            {e.color ? 'Color: ' + e.color : null}
+                            <br />
+                            <br />
+                            {e.brand ? 'Brand: ' + e.brand : null}
+                            <br />
+                            <br />
+                            <Link to={`/item/${e.productid}`} ><a href="" onClick={() => this.props.updateProductid(e.productid)}>{e.title} </a></Link><br />
+                            <br />
+                            Price: {e.price}
+                            <br />
+                            </div>
+                            <div>
+                                {this.imageFunction(e)}
+                            </div>
                         </div>
-                        {/* price: {e.Offers[0].Offer[0].OfferListing[0].Price[0].FormattedPrice[0]}, */}
-                        {/* <img src={e.MediumImage[0].URL} alt="" /><br /> */}
-                        <br />
-                        {/* <img src={e.ImageSets[0].ImageSet.URL} alt="" /><br /> */}
-                        <br />
-                        <br />
                         Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                         <br />
-                        <br />
-                        {e.size ? 'Size: ' + e.siza : null}
-                        <br />
-                        <br />
-                        {e.model ? 'Model: ' + e.model : null}
-                        <br />
-                        <br />
-                        {e.warranty ? 'Warranty: ' + e.warranty : null}
-                        <br />
-                        <br />
-                        Features:<br />
+                       
+                        {/* Features:<br />
                         {e.feature0}<br />
                         {e.feature1}<br />
                         {e.feature2}<br />
                         {e.feature3}<br />
-                        {e.feature4}<br />
+                        {e.feature4}<br /> */}
                         <br />
                     </div>
                 </div>
@@ -278,30 +276,55 @@ class AWS extends Component {
     render() {
         let theRender = this.displayListings()
         // var {updateProductid} = this.props;
-        
-        return (
-            <div>
-                <h1>HOME PAGE</h1>
-                <br />
-                <br />
-                <div>
-                    <Link to='/login'><button>LOGIN</button></Link>
-                    <Link to='/lights'><button>Lights</button></Link>
-                    <Link to='/cart'><button>Cart</button></Link>
-                    <Link to='/alexa'><button>ALEXA</button></Link>
-                    <Link to='/google'><button>GOOGLE</button></Link>
-             
-                    <button onClick={() => this.addToDatabase()}>Add to DB</button>
 
-                </div>
-                {theRender}
+        return (
+            <div className="container">
+                {/* <h1>HOME PAGE</h1> */}
+                <section className="homepage-header">
+                    <div className="homepage-header-top-navbar">
+                        <div className="homepage-login-cart">
+                            <Link to='/login'><Button primary animated='vertical'>
+                                <Button.Content hidden>Shop</Button.Content>
+                                <Button.Content visible>
+                                    <Icon name='shop' />
+                                </Button.Content>
+                            </Button>    </Link>
+                            <div className="login-cart-splitter"></div>
+                            <Link to='/cart'> <Button primary animated='vertical'>
+                                <Button.Content hidden>login</Button.Content>
+                                <Button.Content visible>
+                                    <Icon name='user' />
+                                </Button.Content>
+                            </Button></Link>
+                        </div>
+                        <div className="homepage-search-bar-div">
+                            <select className="homepage-select-dropdown">
+                                <option value="all">All</option>
+                                <option value="lights">Lights</option>
+                                <option value="light_switches">Light Switches</option>
+                                <option value="wall_plug">Wall Plugs</option>
+                                <option value="smart_speakers">Smart Speakers</option>
+                            </select>
+                            {/* <Dropdown className="homepage-select-dropdown" search selection options={dropdownOptions} /> */}
+                            <input className="homepage-searchbar" placeholder="What are you looking for?" />
+                            <button className="submit-button" type="submit"></button>
+                        </div>
+                    </div>
+                    <div className="homepage-main-navbar">
+                        <Link to='/alexa'><button>ALEXA</button></Link>
+                        <Link to='/google'><button>GOOGLE</button></Link>
+                        <Link to='/homekit'><button>HomeKit</button></Link>
+                    </div>
+                    <div className="all-products">
+                        <div className="all-products-div">
+                            {theRender}
+                        </div>
+                    </div>
+
+                    {/* <button onClick={() => this.addToDatabase()}>Add to DB</button> */}
+
+                </section>
                 <div></div>
-                {/* {theRender[1]} */}
-                <br />
-                {/* {theRender[2]} */}
-                <br />
-                {/* {theRender[6]} */}
-                {/* {theRender[9]} */}
             </div>
         )
     }
@@ -319,6 +342,10 @@ let actionOutputs = {
 }
 
 export default connect(mapStateToProps, actionOutputs)(AWS)
+
+
+
+
 
 
 

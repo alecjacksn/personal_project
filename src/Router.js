@@ -7,6 +7,7 @@ import Cart from './components/Cart'
 import ItemClicked from './components/ItemClicked'
 import AllAlexa from './components/AllAlexa'
 import AllGoogle from './components/AllGoogle'
+import HomeKit from './components/HomeKit'
 export default (
     <Switch>
         <Route exact path='/' component={Home} />
@@ -16,5 +17,6 @@ export default (
         <Route path='/Item/:id' component={ItemClicked} />
         <Route path='/alexa' component={AllAlexa} />
         <Route path='/google' component={AllGoogle} />
+        <Route path='/HomeKit' component={HomeKit} />
     </Switch>
 )

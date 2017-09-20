@@ -1,16 +1,16 @@
-.rsc-container {
+ .rsc-container {
   width: 100%;
   position: relative;
-  width: 80%;
   margin: 0px auto;
-  padding: 50px;
+  width: 80%;
+  padding: 50px; 
+ 
   border-radius: 10px;
-}
-
-.pictures {
-  height: 35vh;
-  width: 57vw;
-}
+ }
+ .pictures {
+  height: 75vh; 
+  width: 27vw;
+ }
 
 img {
   border-radius: 20px;

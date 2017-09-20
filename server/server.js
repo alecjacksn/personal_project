@@ -105,7 +105,13 @@ app.get('/api/googleimages', (req,res,next) => {
     req.app.get('db').images.googleImages().then (image => res.status(200).send(image))
 })
 
+app.get('/api/homekit', (req,res,next) => {
+    req.app.get('db').filter.homeKit().then(response => res.status(200).send(response))
+})
 
+app.get('/api/homekitimages', (req,res,next) => {
+    req.app.get('db').images.homeKitimages().then (image => res.status(200).send(image))
+})
 
 
 

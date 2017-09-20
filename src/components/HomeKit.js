@@ -4,7 +4,7 @@ import Slider from '../components/slider/ImageSlider'
 import axios from 'axios'
 
 
-class AllGoogle extends Component {
+class HomeKit extends Component {
     constructor() {
         super()
 
@@ -19,14 +19,14 @@ class AllGoogle extends Component {
     componentDidMount() {
 
             console.log("Product Id: ", this.props.productid)
-            axios.get(`http://localhost:3232/api/google`)
+            axios.get(`http://localhost:3232/api/homekit`)
             .then(res => {
                 this.setState({
                     items: res.data
                 })
                 
             })
-            axios.get(`http://localhost:3232/api/googleimages`).then(res => {
+            axios.get(`http://localhost:3232/api/homekitimages`).then(res => {
                 console.log("image mount test: ", res.data)
                 this.setState({
                     images: res.data
@@ -48,7 +48,7 @@ class AllGoogle extends Component {
 
             return (
                 <Slider images={newArray} >
-                {newArray.slice(0).reverse().map((image, key) => <div key={key}><img src={image.mediumimage} alt="" /></div>)}
+                {newArray.slice(0).reverse().map((image, key) => <div key={key}><img src={image.largeimage} alt="" /></div>)}
                </Slider>
             )
         
@@ -127,14 +127,13 @@ class AllGoogle extends Component {
         
         return (
             <div>
-                <h1>ALL GOOGLE</h1>
+                <h1>HomeKit</h1>
                 <Link to='/'><button>HOME</button></Link>
                 <Link to='/login'><button>Login</button></Link>
                 <Link to='/cart'><button>Cart</button></Link>
                 <Link to='/lights'><button>Lights</button></Link>
+                <Link to='/google'><button>GOOGLE</button></Link>
                 <Link to='/alexa'><button>Alexa</button></Link>
-                <Link to='/homekit'><button>HomeKit</button></Link>
-
                 <div>
                     {theRender}
 
@@ -153,4 +152,4 @@ class AllGoogle extends Component {
 
 
 
-export default AllGoogle;
+export default HomeKit;

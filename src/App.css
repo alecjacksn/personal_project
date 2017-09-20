@@ -1,8 +1,9 @@
 .App {
   text-align: center;
+  background: white;
 }
 
-.App-logo {
+/* .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
 }
@@ -24,7 +25,7 @@
     
   width: 300px; 
 
-}
+} */
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
@@ -33,7 +34,7 @@
 
 
 
-.teeeee {
+/* .teeeee {
   box-shadow: none;
   padding-bottom: 15px;
   border-bottom: 1px solid steelblue;
@@ -45,4 +46,144 @@
 .pictures {
   box-shadow: none;
   width: 60vw;
+} */
+
+
+.homepage-header-top-navbar {
+  display: flex;
+  background: #2196F3;
+  height: 80px;
+  width: 100%;
+  flex-flow: column;  
 }
+
+.homepage-login-cart{
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  height: 20px;
+  padding: 7px;
+}
+
+.homepage-main-navbar {
+  display: flex;
+  justify-content: space-around;
+}
+
+.homepage-search-bar{
+  width: 20vw;
+  /* /* border: none; */
+  border-radius: 2px;
+  /* height: 17.5px;   */
+}
+
+
+.homepage-searchbar {
+  color: white;
+  background: none;
+  border: none;
+  border-bottom: 2px solid rgba(255,255,255, .3);
+  border-left: 2px solid rgba(255,255,255, .0);
+  margin-left: 5px;
+  outline: 0;
+  transition: .3s ease-in-out;
+  width: 22vw;
+  margin-top: 20px;
+  letter-spacing: 2px;
+  font-weight: 100px;
+  word-spacing: 1px;
+  font-size: 15px;
+  padding: 3px;
+  padding-left: 7px;
+  
+}
+
+.homepage-searchbar:focus {
+  border-bottom: 2.2px solid white;
+  border-left: 2px solid white;
+  transition: .3s ease-in-out;
+  width: 24vw;
+  
+  
+}
+
+.homepage-searchbar::placeholder {
+  opacity: .5;
+  color: white;
+
+}
+
+.homepage-searchbar:focus::placeholder {
+  display: none;
+}
+
+
+.homepage-select-dropdown {
+  display: inline-block;
+  width: 80px;
+  overflow: hidden;
+  transition: .3s ease-in-out;
+  background: none; 
+  border-radius: 0px;
+  border: 2px solid rgba(255,255,255, 0);
+  /* border-bottom: 2px solid white; */
+  /* border-bottom-right-radius: 0; */
+  font-size: 15px;
+  border-radius: 0px;
+  padding: 3px;
+  color: white;
+  letter-spacing: 2px;
+  font-weight: 100px;
+  word-spacing: 1px;
+  font-size: 15px;
+  
+}
+
+.homepage-select-dropdown:focus {
+  transition: .3s ease-in-out;
+  outline: none;
+  border: 2px solid white;
+  width: auto;
+  color: white;
+}
+
+.alexatest{
+  background: red;
+}
+
+.login-cart-splitter {
+  width: 20px;
+  height: 36px;
+  border-right: 1px solid white;
+  margin-right: 11px;
+  margin-left: -9px;
+}
+
+.submit-button {
+  background: url("./pictures/if_Searchicons-search_825447.png") no-repeat 100% transparent;
+  background-size: 20px; 
+  border: none;
+  color: #000000;
+  cursor: pointer;
+  font-weight: bold;
+  height: 20px;
+  padding-bottom: 2px;
+  width: 35px;
+  margin-left: -3%;
+}
+
+
+.mapped-products {
+  background: rgba(0,0,0, .1);
+  display: flex;
+  flex-direction: row;
+}
+
+.mapped-info {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+/* .mapped-basic-info {
+  display: flex;
+} */
