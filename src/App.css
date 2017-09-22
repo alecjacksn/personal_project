@@ -33,20 +33,8 @@
 }
 
 
+/*////////////////////                  MAIN NAV BAR                  //////////////////*/
 
-/* .teeeee {
-  box-shadow: none;
-  padding-bottom: 15px;
-  border-bottom: 1px solid steelblue;
-
-  
-  
-}
-
-.pictures {
-  box-shadow: none;
-  width: 60vw;
-} */
 
 
 .homepage-header-top-navbar {
@@ -68,57 +56,59 @@
 .homepage-main-navbar {
   display: flex;
   justify-content: space-around;
+  align-items: center;
+  height: 60px;
+  width: 100%;
 }
 
-.homepage-search-bar{
-  width: 20vw;
-  /* /* border: none; */
-  border-radius: 2px;
-  /* height: 17.5px;   */
-}
+
 
 
 .homepage-searchbar {
   color: white;
   background: none;
   border: none;
-  border-bottom: 2px solid rgba(255,255,255, .3);
+  border-bottom: 2px solid rgba(255,255,255, .2);
   border-left: 2px solid rgba(255,255,255, .0);
+  border-right: 2px solid rgba(255,255,255, .0);
+  border-top: 2px solid rgba(255,255,255, .0);
   margin-left: 5px;
   outline: 0;
   transition: .3s ease-in-out;
-  width: 22vw;
+  width: 340px;
   margin-top: 20px;
   letter-spacing: 2px;
   font-weight: 100px;
   word-spacing: 1px;
-  font-size: 15px;
+  font-size: 18px;
   padding: 3px;
-  padding-left: 7px;
-  
+  padding-left: 10px;
+  border-radius: 5px;
 }
 
 .homepage-searchbar:focus {
-  border-bottom: 2.2px solid white;
+  border: 2.2px solid white;
   border-left: 2px solid white;
   transition: .3s ease-in-out;
-  width: 24vw;
-  
+  width: 340px;
   
 }
+
+
 
 .homepage-searchbar::placeholder {
   opacity: .5;
-  color: white;
-
+  color: black;
+  transition: .2s ease-in-out;
 }
 
 .homepage-searchbar:focus::placeholder {
-  display: none;
+  transition: .2s ease-in-out;
+  opacity: 0;
 }
 
 
-.homepage-select-dropdown {
+/* .homepage-select-dropdown {
   display: inline-block;
   width: 80px;
   overflow: hidden;
@@ -126,8 +116,8 @@
   background: none; 
   border-radius: 0px;
   border: 2px solid rgba(255,255,255, 0);
-  /* border-bottom: 2px solid white; */
-  /* border-bottom-right-radius: 0; */
+  border-bottom: 2px solid white;
+  border-bottom-right-radius: 0;
   font-size: 15px;
   border-radius: 0px;
   padding: 3px;
@@ -145,15 +135,16 @@
   border: 2px solid white;
   width: auto;
   color: white;
-}
+} */
 
-.alexatest{
-  background: red;
+
+.homepage-select-dropdown {
+  display: none;
 }
 
 .login-cart-splitter {
   width: 20px;
-  height: 36px;
+  height: 33px;
   border-right: 1px solid white;
   margin-right: 11px;
   margin-left: -9px;
@@ -161,29 +152,354 @@
 
 .submit-button {
   background: url("./pictures/if_Searchicons-search_825447.png") no-repeat 100% transparent;
+  opacity: .85;
   background-size: 20px; 
   border: none;
   color: #000000;
   cursor: pointer;
   font-weight: bold;
-  height: 20px;
+  height: 18px;
   padding-bottom: 2px;
-  width: 35px;
-  margin-left: -3%;
+  width: 30px;
+  margin-left: -42px;
 }
 
 
-.mapped-products {
-  background: rgba(0,0,0, .1);
+
+
+
+/*////////////////////                  MAIN NAV BAR                  //////////////////*/
+
+
+
+
+/*////////////////////                  ALEXA NAV BAR                  //////////////////*/
+
+
+
+
+.homepage-main-navbar div {
+  width: 100%;
+  height: 70px;
+  transition: .25s ease-in-out;
+  /* margin-top: 12px; */
+  margin-right: 15px;
+  padding-top: 6.5px;
+  
+  
+
+}
+.homepage-main-navbar div:hover {
+  transition: .25s ease-in-out;
+  width: 100%;
+  height: 70px;
+  /* border-radius: 15px; */
+}
+
+
+.alexa-button {
+  margin-top: 7px;
+  height: 40px;
+  border: none;
+  
+}
+
+.google-button{
+  /* margin-top: 5px; */
+  height: 70px;
+}
+
+.homekit-button{
+  margin-top: 2px;
+  height: 55px;
+  border: none;
+  transition: .2s ease-in-out;
+}
+
+
+.divider {
+  /* margin: 20px 2% 0 2%; */
+  box-shadow: 0px 1px 2px rgba(0,0,0, .2);
+}
+
+
+.google-assistant-divider {
+  border-right: 1px solid black;
+  margin-bottom: 10px;
+}
+
+.homekit-divider {
+  border-left: 1px solid rgba(0,0,0, .2);
+  
+  
+}
+
+.alexa-divider {
+  border-right: 1px solid rgba(0,0,0, .2)
+}
+
+
+.homekit-button:hover {
+  position: relative;
+  transition: .2s ease-in-out;
+  
+  
+  
+
+}
+  
+
+
+
+/*////////////////////                  ALEXA NAV BAR                  //////////////////*/
+
+
+
+
+
+
+
+
+
+/*/////////////////////////       ITEMS DISPLAYED       ///////////////////////////*/
+
+
+
+
+.all-products {
+  margin-top: 30px;
+}
+/* .all-products-div {
   display: flex;
-  flex-direction: row;
-}
+  flex-wrap: wrap;
+} */
+
+
 
 .mapped-info {
+  padding-top: 20px;
   display: flex;
   flex-direction: row-reverse;
+  justify-content: flex-end;
+  width: 80%;
+
+  /* margin-left: -30px; */
 }
 
-/* .mapped-basic-info {
+
+
+.mapped-title {
+  font-size: 20px;
+
+}
+
+.mapped-image {
   display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-width: 218px;
+  height: 218px;
+  /* background: rgba(0,0,0, .2) */
+}
+
+/* 
+.mapped-image {  
+  
 } */
+
+
+.display-images {
+  height: 210px;
+  width: auto;
+  display: flex;
+  
+  
+}
+
+.display-images-big {
+  height: 280px;
+  /* width: 280px; */
+}
+
+
+
+.listed-products {
+  position: absolute;
+  margin-left: 225px;
+  margin-right: 80px;
+  padding: 5px;
+}
+
+.product-bottom-border{
+  border-bottom: 1px solid rgba(0,0,0, .2);
+  height: 30px;
+  width: 88.1%;
+}
+
+
+
+/*/////////////////////////       ITEMS DISPLAYED       ///////////////////////////*/
+
+
+
+
+
+
+
+
+
+.show-search-results {
+  margin-top: 45px;
+  border-top: 1px solid rgba(0,0,0, .2);
+}
+
+
+
+
+.side-bars {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  
+}
+
+.side-bar-right {
+  style: none;
+  /* position: relative; */
+  margin-top: 50px;
+  width: 200px;
+  height: 65vh;
+  background: steelblue;
+  opacity: .4;
+}
+
+.side-bar-right-none {
+  display: none;
+}
+
+
+
+/*                LEFT NAV BAR                        */
+
+label {
+  cursor: pointer;
+}
+
+
+.side-bar-left {
+  font-size: 30px;
+  color: #797979;
+  height: auto;
+  width: 200px;
+  margin-left: 10px;
+  padding: 5px;
+  border-right: 1.1px solid rgba(226,226,227, 1);
+  
+  
+  
+}
+
+.side-bar-left h5 {
+  color: black;
+  text-align: left;
+  font-size: 16px;
+}
+
+
+
+.checkbox-label {
+  display: flex;
+  padding: 1px;
+}
+
+.checkbox-label label {
+  margin-left: 14px;
+  font-size: 13px;
+  color: rgba(50,50,50, .9);
+  font-weight: 50;
+  margin-top: -2px;
+}
+
+
+
+
+
+/*                LEFT NAV BAR                        */
+
+
+
+
+
+
+/*                  smart speaker hover slide in              */
+
+
+
+
+
+/* .echo-image:hover {
+  background: url('./pictures/echo.png') 95% no-repeat;
+  background-size: 25%;
+  height: 60px;
+} */
+
+/* .google-home-image:hover {
+  background: url('./pictures/google_home.png') 90% no-repeat;
+  background-size: 40px;
+  height: 55px;
+} */
+
+/* .homepod-image:hover {
+  background: url('./pictures/homepod-standing-black.jpg') 95% no-repeat;
+  background-size: 85px;
+  height: 60px;
+} */
+
+/* .homepage-main-navbar div:nth-child(1) {
+  background: white;
+} */
+
+
+
+
+
+/*                  smart speaker hover slide in              */
+
+
+
+
+
+/* 
+.alexa-button {
+  background: url('./pictures/logo_amazon.svg') 100% no-repeat transparent;
+  background-size:50%;
+  height: 65px;
+  width: 300px;
+  border: none;
+  cursor: pointer;
+}
+
+.google-button {
+  background: url('./pictures/logo_amazon.svg') 100% no-repeat transparent;
+  background-size:50%;
+  height: 65px;
+  width: 300px;
+  border: none;
+  cursor: pointer;
+}
+.homekit-button {
+  background: url('./pictures/logo_amazon.svg') 100% no-repeat transparent;
+  background-size:50%;
+  height: 65px;
+  width: 300px;
+  border: none;
+  cursor: pointer;
+} */
+
+
+
+
+
+
+
+/*                  smart speaker hover slide in              */

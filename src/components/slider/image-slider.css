@@ -12,10 +12,7 @@
   width: 27vw;
  }
 
-img {
-  border-radius: 20px;
-  box-shadow: 8px 16px 17px rgba(0,0,0, .35)
-}
+
 .rsc-slider {
   display: -webkit-flex;
   display: -ms-flexbox;

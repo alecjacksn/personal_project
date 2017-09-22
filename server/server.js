@@ -114,6 +114,22 @@ app.get('/api/homekitimages', (req,res,next) => {
 })
 
 
+app.get('/api/brands/wemo', (req,res,next) => {
+    req.app.get('db').brands.Wemo().then(response => res.status(200).send(response) )
+})
+
+
+app.get('/api/brands/wemo/images', (req,res,next) => {
+    req.app.get('db').brands.WemoImages().then (image => res.status(200).send(image))
+})
+
+app.get('/api/brands', ( req, res, next ) => {
+    let { query } = req
+
+    req.app.get('db').brands.Wemo( query.brand ).then( filtered => res.status(200).send( filtered ) )
+                     
+})
+
 
 //                     aws-lib                          //
 

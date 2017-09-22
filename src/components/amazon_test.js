@@ -6,8 +6,16 @@ import { Link } from 'react-router-dom'
 import { updateProductid } from '../ducks/reducer'
 import { connect } from 'react-redux'
 import 'semantic-ui-css/semantic.min.css'
-import { Button, Icon } from 'semantic-ui-react'
+import { Button, Icon, Divider } from 'semantic-ui-react'
+import amazonLogo from '../pictures/alexa_image.png'
+import googleLogo from '../pictures/google-assistant.png'
+import homeKit from '../pictures/works_with_homekit_badge_800.webp'
 
+
+
+
+// import echoSpeaker from '../pictures/echo.png'
+// import homepod from '../pictures/homepod.png'
 
 // import amazon from 'amazon-product-api'
 // var options = { SearchIndex: "Books", Keywords: "Deep Work" }
@@ -38,14 +46,14 @@ class AWS extends Component {
 
     componentDidMount() {
         axios.get('http://localhost:3232/api/products').then(res => {
-            console.log("component mount test: ", res)
+            // console.log("component mount test: ", res)
             this.setState({
                 items: res.data,
 
             })
         })
         axios.get('http://localhost:3232/api/productimages').then(res => {
-            console.log("image mount test: ", res.data)
+            // console.log("image mount test: ", res.data)
             this.setState({
                 images: res.data
             })
@@ -59,7 +67,7 @@ class AWS extends Component {
         var theImages = this.state.images
         for (var i = 0; i < theImages.length; i++) {
             if (theImages[i].prodid === e.productid) {
-                var x = <img className="teeeee" src={theImages[i].mediumimage} alt="" />
+                var x = <Link to={`/item/${e.productid}`} ><a href="" onClick={() => this.props.updateProductid(e.productid)}><img className="display-images" src={theImages[i].largeimage} alt="" /></a></Link>
                 // newArray.push(theImages[i])
             }
         }
@@ -71,6 +79,12 @@ class AWS extends Component {
         // )
         // })
     }
+
+
+
+
+
+
 
 
 
@@ -226,55 +240,50 @@ class AWS extends Component {
     //       extra: 'Extra',
     //     },
 
-    displayListings() {
-        var display = this.state.items;
+    // displayListings() {
+    //     var display = this.state.items;
 
-        return display.map((e, i) => {
-            return (<div key={i}>
-                <div className="mapped-products">
-                    <div>
-                        <div className="mapped-info">
-                            <div className="mapped-basic-info">
-                            {e.color ? 'Color: ' + e.color : null}
-                            <br />
-                            <br />
-                            {e.brand ? 'Brand: ' + e.brand : null}
-                            <br />
-                            <br />
-                            <Link to={`/item/${e.productid}`} ><a href="" onClick={() => this.props.updateProductid(e.productid)}>{e.title} </a></Link><br />
-                            <br />
-                            Price: {e.price}
-                            <br />
-                            </div>
-                            <div>
-                                {this.imageFunction(e)}
-                            </div>
-                        </div>
-                        Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
-                        <br />
-                       
-                        {/* Features:<br />
-                        {e.feature0}<br />
-                        {e.feature1}<br />
-                        {e.feature2}<br />
-                        {e.feature3}<br />
-                        {e.feature4}<br /> */}
-                        <br />
-                    </div>
-                </div>
-                <br /><br />
-                <br />
-                <br />
-            </div>
+    //     return display.map((e, i) => {
+    //         return (<div key={i}>
+    //             <div className="mapped-products">
+    //                 <div>
+    //                     <div className="mapped-info">
+    //                         <div className="mapped-basic-info">
+    //                             <div className="mapped-title">
+    //                                 <Link to={`/item/${e.productid}`} ><a href="" onClick={() => this.props.updateProductid(e.productid)}>{e.title} </a></Link><br />
+    //                             </div>
+    //                             <br />
+    //                             {e.color ? 'Color: ' + e.color : null}
+    //                             <br />
+    //                             {e.brand ? 'Brand: ' + e.brand : null}
+    //                             <br />
+    //                             <br />
+    //                             <br />
+    //                             Price: {e.price}
+    //                             <br />
+    //                             Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
+    //                         </div>
+    //                         <div className="mapped-image">
+    //                             {this.imageFunction(e)}
+    //                         </div>
+    //                     </div>
+                  
+    //                 </div>
+
+    //             </div>
+    //             <br /><br />
+    //             <br />
+    //             <br />
+    //         </div>
 
 
-            )
-        })
-    }
+    //         )
+    //     })
+    // }
 
 
     render() {
-        let theRender = this.displayListings()
+
         // var {updateProductid} = this.props;
 
         return (
@@ -283,15 +292,15 @@ class AWS extends Component {
                 <section className="homepage-header">
                     <div className="homepage-header-top-navbar">
                         <div className="homepage-login-cart">
-                            <Link to='/login'><Button primary animated='vertical'>
-                                <Button.Content hidden>Shop</Button.Content>
+                            <Link to='/cart'><Button size="tiny" primary animated='vertical'>
+                                <Button.Content hidden>Cart</Button.Content>
                                 <Button.Content visible>
                                     <Icon name='shop' />
                                 </Button.Content>
                             </Button>    </Link>
                             <div className="login-cart-splitter"></div>
-                            <Link to='/cart'> <Button primary animated='vertical'>
-                                <Button.Content hidden>login</Button.Content>
+                            <Link to='/login'> <Button size="tiny" primary animated='vertical'>
+                                <Button.Content hidden>Login</Button.Content>
                                 <Button.Content visible>
                                     <Icon name='user' />
                                 </Button.Content>
@@ -311,21 +320,39 @@ class AWS extends Component {
                         </div>
                     </div>
                     <div className="homepage-main-navbar">
-                        <Link to='/alexa'><button>ALEXA</button></Link>
-                        <Link to='/google'><button>GOOGLE</button></Link>
-                        <Link to='/homekit'><button>HomeKit</button></Link>
-                    </div>
-                    <div className="all-products">
-                        <div className="all-products-div">
-                            {theRender}
+                        <div className="alexa-button-div">
+                            {/* <img className="echo-image" src={echoSpeaker} alt="" /> */}
+                            <div className="alexa-divider">
+                            <Link to='/alexa'><img src={amazonLogo} alt="" className="alexa-button" /></Link>
+                            </div>
                         </div>
+
+                        <div className="google-button-div">
+                            {/* <div className="google-home-image"> */}
+                            {/* <Divider /> */}
+                            {/* <div className="google-assistant-divider"> */}
+                            <Link to='/google'><img src={googleLogo} alt="" className="google-button" /></Link>
+                            {/* </div> */}
+                        </div>
+                        <div className="alexa-button-div">
+                            {/* <div className="homepod-image"> */}
+                            <div className="homekit-divider">
+                            <Link to='/homekit'><img src={homeKit} alt="" className="homekit-button" /></Link>
+                            </div>
+                        </div>
+                        <br />
                     </div>
+                    <div className="divider">
+
+                        <Divider />
+                    </div>
+                    
 
                     {/* <button onClick={() => this.addToDatabase()}>Add to DB</button> */}
 
                 </section>
                 <div></div>
-            </div>
+            </div >
         )
     }
 }
@@ -333,7 +360,7 @@ class AWS extends Component {
 
 
 function mapStateToProps(state) {
-    console.log("RETURNED STATE:", state)
+    // console.log("RETURNED STATE:", state)
     return state
 }
 

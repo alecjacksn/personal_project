@@ -1,1 +1,1 @@
-SELECT * FROM pictures WHERE prodid = $1
+SELECT * FROM pictures WHERE prodid = $1 order by id,prodid

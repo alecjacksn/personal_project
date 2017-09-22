@@ -5,27 +5,28 @@ import axios from 'axios'
 
 
 
-class Lights extends Component {
+class WeMo extends Component {
   constructor() {
     super()
 
     this.state = {
       items: [],
       images: [],
-      prodIdClicked: ''
+      brand: 'brand',
+      prodIdClicked: 'WeMo'
     }
   }
 
 
   componentDidMount() {
-    axios.get('http://localhost:3232/api/products/lights').then(res => {
+    axios.get(`http://localhost:3232/api/brands?${this.state.brand}=${this.state.prodIdClicked}`).then(res => {
       console.log("component mount test: ", res)
       this.setState({
         items: res.data,
 
       })
     })
-    axios.get('http://localhost:3232/api/products/lights/images').then(res => {
+    axios.get('http://localhost:3232/api/brands/wemo/images').then(res => {
       console.log("image mount test: ", res.data)
       this.setState({
         images: res.data
@@ -106,4 +107,4 @@ class Lights extends Component {
   }
 }
 
-export default Lights;
+export default WeMo;
