@@ -60,11 +60,6 @@ app.use(passport.session());
 
 
 
-
-
-
-
-
 app.get('/api/products', ( req, res, next ) => {
     req.app.get('db').allProducts().then (prod => res.status(200).send(prod))
 })
@@ -88,6 +83,11 @@ app.get('/api/item/image/:id', (req,res,next) => {
     req.app.get('db').images.itemClickedPictures(req.params.id).then(response => res.status(200).send(response))
 });
 
+
+
+//////////////////////////              ALEXA                   ////////////////////////////////
+
+
 app.get('/api/alexa', (req,res,next) => {
     req.app.get('db').filter.allAlexa().then(response => res.status(200).send(response))
 })
@@ -95,6 +95,9 @@ app.get('/api/alexa', (req,res,next) => {
 app.get('/api/alexaimages', (req,res,next) => {
     req.app.get('db').images.alexaImages().then (image => res.status(200).send(image))
 })
+
+
+//////////////////////////              GOOGLE                   ////////////////////////////////
 
 
 app.get('/api/google', (req,res,next) => {
@@ -105,6 +108,10 @@ app.get('/api/googleimages', (req,res,next) => {
     req.app.get('db').images.googleImages().then (image => res.status(200).send(image))
 })
 
+
+//////////////////////////              HOMEKIT                   ////////////////////////////////
+
+
 app.get('/api/homekit', (req,res,next) => {
     req.app.get('db').filter.homeKit().then(response => res.status(200).send(response))
 })
@@ -112,6 +119,11 @@ app.get('/api/homekit', (req,res,next) => {
 app.get('/api/homekitimages', (req,res,next) => {
     req.app.get('db').images.homeKitimages().then (image => res.status(200).send(image))
 })
+
+
+
+//////////////////////////              BRANDS                   ////////////////////////////////
+
 
 
 app.get('/api/brands/wemo', (req,res,next) => {
@@ -128,6 +140,13 @@ app.get('/api/brands', ( req, res, next ) => {
 
     req.app.get('db').brands.Wemo( query.brand ).then( filtered => res.status(200).send( filtered ) )
                      
+})
+
+
+app.get('/api/brandnames', (req,res,next) => {
+    let {query} = req
+
+    req.app.get('db').brands.brandsForProductType(query.producttype).then(response => res.status(200).send(response))
 })
 
 

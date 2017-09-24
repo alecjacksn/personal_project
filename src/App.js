@@ -20,20 +20,23 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Amazon />
-
+        <div className="header-test">
+          <Amazon />
+        </div>
         <div className="all-products">
           <div className="all-products-div">
             <div className="side-bars">
-              <LeftSideBar />
+              <div className="left-test">
+                <LeftSideBar />
+              </div>
               <div className="listed-products">
                 <div className="show-search-results">
-                 {Router}
-                 
+                  {Router}
+
                 </div>
               </div>
-              <div className="side-bar-right-hide">
-                {/* ADDS HERE */}
+              <div className="side-bar-right-none">
+                ADDS HERE
               </div>
             </div>
           </div>

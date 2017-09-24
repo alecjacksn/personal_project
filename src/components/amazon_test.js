@@ -10,7 +10,7 @@ import { Button, Icon, Divider } from 'semantic-ui-react'
 import amazonLogo from '../pictures/alexa_image.png'
 import googleLogo from '../pictures/google-assistant.png'
 import homeKit from '../pictures/works_with_homekit_badge_800.webp'
-
+import watfa from '../pictures/wafta.png'
 
 
 
@@ -291,20 +291,25 @@ class AWS extends Component {
                 {/* <h1>HOME PAGE</h1> */}
                 <section className="homepage-header">
                     <div className="homepage-header-top-navbar">
+                            <div className='header-logo'>
+                            <span className='header-logo-w'>W</span><div className="logo-splitter">afta</div>
+                            </div>
+                            <div>
                         <div className="homepage-login-cart">
-                            <Link to='/cart'><Button size="tiny" primary animated='vertical'>
+                            <Link to='/cart'><Button size="mini" primary animated='vertical'>
                                 <Button.Content hidden>Cart</Button.Content>
                                 <Button.Content visible>
                                     <Icon name='shop' />
                                 </Button.Content>
                             </Button>    </Link>
                             <div className="login-cart-splitter"></div>
-                            <Link to='/login'> <Button size="tiny" primary animated='vertical'>
+                            <Link to='/login'> <Button size="mini" primary animated='vertical'>
                                 <Button.Content hidden>Login</Button.Content>
                                 <Button.Content visible>
                                     <Icon name='user' />
                                 </Button.Content>
                             </Button></Link>
+                            </div>
                         </div>
                         <div className="homepage-search-bar-div">
                             <select className="homepage-select-dropdown">
@@ -315,8 +320,8 @@ class AWS extends Component {
                                 <option value="smart_speakers">Smart Speakers</option>
                             </select>
                             {/* <Dropdown className="homepage-select-dropdown" search selection options={dropdownOptions} /> */}
-                            <input className="homepage-searchbar" placeholder="What are you looking for?" />
-                            <button className="submit-button" type="submit"></button>
+                            <input className="homepage-searchbar" placeholder="Search" />
+                            {/* <button className="submit-button" type="submit"></button> */}
                         </div>
                     </div>
                     <div className="homepage-main-navbar">
@@ -328,11 +333,11 @@ class AWS extends Component {
                         </div>
 
                         <div className="google-button-div">
-                            {/* <div className="google-home-image"> */}
+                            <div className="google-home-image">
                             {/* <Divider /> */}
                             {/* <div className="google-assistant-divider"> */}
                             <Link to='/google'><img src={googleLogo} alt="" className="google-button" /></Link>
-                            {/* </div> */}
+                            </div>
                         </div>
                         <div className="alexa-button-div">
                             {/* <div className="homepod-image"> */}
@@ -344,7 +349,7 @@ class AWS extends Component {
                     </div>
                     <div className="divider">
 
-                        <Divider />
+                        {/* <Divider /> */}
                     </div>
                     
 

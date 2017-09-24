@@ -26,7 +26,7 @@ class WeMo extends Component {
 
       })
     })
-    axios.get('http://localhost:3232/api/brands/wemo/images').then(res => {
+    axios.get(`http://localhost:3232/api/brands/${this.state.prodIdClicked}/images`).then(res => {
       console.log("image mount test: ", res.data)
       this.setState({
         images: res.data

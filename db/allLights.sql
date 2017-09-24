@@ -1,2 +1,2 @@
 
-SELECT * FROM products WHERE producttype = 'light bulb'
+SELECT * FROM products WHERE producttype = 'light_bulb'

@@ -1,0 +1,1 @@
+SELECT brand from products WHERE producttype= $1
