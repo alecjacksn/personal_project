@@ -84,6 +84,42 @@ app.get('/api/item/image/:id', (req,res,next) => {
 });
 
 
+app.get('/api/products/light_switch', (req,res,next) => {
+    req.app.get('db').light_switch().then(prod => res.status(200).send(prod))
+})
+
+app.get('/api/products/light_switch/images', (req, res, next) => {
+    req.app.get('db').images.lightSwitchPictures().then (response => res.status(200).send(response))
+})
+
+
+app.get('/api/products/outlet', (req,res,next) => {
+    req.app.get('db').outlet().then(prod => res.status(200).send(prod))
+})
+
+app.get('/api/products/outlet/images', (req, res, next) => {
+    req.app.get('db').images.outletPictures().then (response => res.status(200).send(response))
+})
+
+
+app.get('/api/products/thermostat', (req,res,next) => {
+    req.app.get('db').thermostat().then(prod => res.status(200).send(prod))
+})
+
+app.get('/api/products/thermostat/images', (req, res, next) => {
+    req.app.get('db').images.thermostatPictures().then (response => res.status(200).send(response))
+})
+
+
+app.get('/api/products/smart_speaker', (req,res,next) => {
+    let {query} = req
+    req.app.get('db').smartSpeaker(query.producttype).then(prod => res.status(200).send(prod))
+})
+
+app.get('/api/products/smart_speaker/images', (req, res, next) => {
+    req.app.get('db').images.smartSpeakerPictures().then (response => res.status(200).send(response))
+})
+
 
 //////////////////////////              ALEXA                   ////////////////////////////////
 
@@ -143,10 +179,14 @@ app.get('/api/brands', ( req, res, next ) => {
 })
 
 
+
 app.get('/api/brandnames', (req,res,next) => {
     let {query} = req
-
+    if(query.producttype === 'allProducts'){
+        req.app.get('db').brands.allBrands().then(response => res.status(200).send(response))
+    } else {
     req.app.get('db').brands.brandsForProductType(query.producttype).then(response => res.status(200).send(response))
+    }
 })
 
 

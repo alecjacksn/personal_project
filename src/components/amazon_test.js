@@ -10,7 +10,6 @@ import { Button, Icon, Divider } from 'semantic-ui-react'
 import amazonLogo from '../pictures/alexa_image.png'
 import googleLogo from '../pictures/google-assistant.png'
 import homeKit from '../pictures/works_with_homekit_badge_800.webp'
-import watfa from '../pictures/wafta.png'
 
 
 

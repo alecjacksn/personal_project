@@ -206,7 +206,8 @@ body {
 .header-logo-w {
   color: rgb(41, 134, 205);
   font-size: 48px;
-  font-weight: 800;
+  font-weight: 400;
+  font-family: sans-serif
 }
 
 .logo-splitter{
@@ -229,9 +230,13 @@ body {
 
 /*////////////////////                  ALEXA NAV BAR                  //////////////////*/
 
-
+.homepage-main-navbar {
+  transition: .5s ease-in-out;
+  /* display: none; */
+}
 
 .homepage-main-navbar div {
+  transition: .5s ease-in-out;
   width: 100%;
   height: 50px;
   transition: .25s ease-in-out;
@@ -239,7 +244,7 @@ body {
   /* margin-right: 15px; */
   padding-top: 6.5px;
   background: white;
-
+  /* display: none; */
 }
 .homepage-main-navbar div:hover {
   transition: .25s ease-in-out;
@@ -255,8 +260,6 @@ body {
 .alexa-button {
   margin-top: 7px;
   height: 35px;
-  border: none;
-  
 }
 
 .google-button{
@@ -276,7 +279,7 @@ body {
   /* margin: 20px 2% 0 2%; */
   padding: 6px;
   border-bottom: 1px solid #e6e6e6;
-  box-shadow: 150px 10px 25px rgba(0,0,0, .3);
+  box-shadow: 150px 8px 25px rgba(0,0,0, .3);
   z-index: 10;
   background: white;
 }
@@ -459,13 +462,14 @@ label {
 .side-bar-left {
   font-size: 30px;
   color: #797979;
-  height: 700px;
+  min-height: 81vh;
+  height: auto;
   width: 180px;
   padding: 5px;
   border-right: 1.1px solid rgba(226,226,227, 1);
   margin-top: -43px;
   padding-top: 30px;
-  z-index: 150;
+  z-index: 100vh 100%;
   background: white;
   box-shadow: 8px 8px 20px rgba(0,0,0, .1);
 }

@@ -1,0 +1,1 @@
+SELECT brand FROM products;

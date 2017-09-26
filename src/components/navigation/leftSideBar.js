@@ -2,8 +2,23 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import _ from 'underscore-node'
-import {Sticky } from 'semantic-ui-react'
+import { Sticky } from 'semantic-ui-react'
+import {
+    showLights
+    , showLightSwitches
+    , showAllProducts
+    , showOutlets
+    , showThermostats
+    , showSmartSpeakers
+    , brandsToFilter
+    , deleteBrandsToFilter
+    , filterBrandsTF
+
+} from '../../ducks/reducer'
+import { connect } from 'react-redux'
 // const URL = 'http://localhost:3232';
+
+
 
 class LeftSideBar extends Component {
     constructor() {
@@ -17,18 +32,23 @@ class LeftSideBar extends Component {
             brandNames: [],
             brandsBeingDisplayed: [],
             brandsActuallyDisplayed: [],
+            allProducts: {
+                clicked: false,
+                brands: [],
+                div: []
+            },
             light_bulb: {
                 clicked: false,
                 brands: [],
                 div: []
             },
             light_switch: {
-                clicked: false,
                 brands: [],
                 div: []
             },
             thermostat: {
                 clicked: false,
+                search: null,
                 brands: [],
                 div: []
             },
@@ -41,7 +61,7 @@ class LeftSideBar extends Component {
                 clicked: false,
                 brands: [],
                 div: []
-            }
+            },
         }
     }
 
@@ -56,20 +76,70 @@ class LeftSideBar extends Component {
     }
 
 
-    getBrandsForCategory(x, clickedState) {
+    getBrandsForAll(x, clickedState, reducerTF) {
         if (!clickedState.clicked) {
+            this.setState({
+                ['light_bulb']: { ...this.state.light_bulb, clicked: false },
+                ['light_switch']: { ...this.state.light_switch, clicked: false },
+                ['thermostat']: { ...this.state.thermostat, clicked: false },
+                ['outlet']: { ...this.state.outlet, clicked: false },
+                ['smart_speaker']: { ...this.state.smart_speaker, clicked: false }
+            })
+            this.props.showLights(false)
+            this.props.showLightSwitches(false)
+            this.props.showOutlets(false)
+            this.props.showThermostats(false)
+            this.props.showSmartSpeakers(false)
+            this.refs['light-box'].checked = false
+            this.refs['light-switch-box'].checked = false
+            this.refs['outlet-box'].checked = false
+            this.refs['thermostat-box'].checked = false
+            this.refs['smart-speaker-box'].checked = false
             axios.get(`http://localhost:3232/api/brandnames?producttype=${x}`)
                 .then(res => {
+                    console.log(res)
                     this.setState({
                         [x]: { ...clickedState, brands: res.data, clicked: true },
                         clicked: x,
                         ready: true
                     })
                 })
+            reducerTF(true)
         } else {
             this.setState({
-                [x]: { ...clickedState, clicked: false },
+                [x]: { ...clickedState, clicked: false }
             })
+            reducerTF(false)
+        }
+    }
+
+
+
+    getBrandsForCategory(x, clickedState, reducerTF) {
+        if (this.state.allProducts.clicked) {
+            this.setState({
+                ['allProducts']: { ...this.state.allProducts, clicked: false }
+            })
+            this.props.showAllProducts(false)
+            this.refs['allbox1'].checked = false
+        }
+        if (!clickedState.clicked) {
+            axios.get(`http://localhost:3232/api/brandnames?producttype=${x}`)
+                .then(res => {
+                    //reducerBrands(res.data)
+                    this.setState({
+                        [x]: { ...clickedState, brands: res.data, clicked: true },
+                        clicked: x,
+                        ready: true
+                    })
+                })
+            // reducerBrands(clickedState.brands)
+            reducerTF(true)
+        } else {
+            this.setState({
+                [x]: { ...clickedState, clicked: false }
+            })
+            reducerTF(false)
         }
     }
 
@@ -78,10 +148,10 @@ class LeftSideBar extends Component {
     divFunction(e) {
         var x = []
         var test = e;
-         test.map((e, i) => {
-             x.push(<div key={i} className="checkbox-label">
-                <input type="checkbox" onClick={() => this.testerer()} className="wemo-brand-search" />
-                <label htmlFor="wemo-brand-search">{test[i]} </label>
+        test.map((e, i) => {
+            x.push(<div key={i} className="checkbox-label">
+                <input id={test[i]} type="checkbox"  className="wemo-brand-search" />
+                <label htmlFor={test[i]} onClick={() => this.filterBrandsFunction(e)} >{test[i]} </label>
 
             </div>)
         })
@@ -89,21 +159,11 @@ class LeftSideBar extends Component {
             brandsActuallyDisplayed: x
         })
         return x;
-}
+    }
 
     test = () => {
 
-        Array.prototype.diff = function (arr2) {
-            var ret = [];
-            this.sort();
-            arr2.sort();
-            for (var i = 0; i < this.length; i += 1) {
-                if (arr2.indexOf(this[i]) > -1) {
-                    ret.push(this[i]);
-                }
-            }
-            return ret;
-        };
+
 
         var diff;
         var truu = this.state.clicked
@@ -122,7 +182,7 @@ class LeftSideBar extends Component {
 
 
         testtt = _.uniq(this.state.lastAttempt, newArray)
-        console.log('underscore: ', testtt)
+        // console.log('underscore: ', testtt)
         this.setState({
             brandsBeingDisplayed: newStateArray,
             lastAttempt: testtt
@@ -131,15 +191,8 @@ class LeftSideBar extends Component {
 
 
         finalArray = _.without(newArray, testtt)
-        console.log('maybe? : ', maybe)
+        // console.log('maybe? : ', maybe)
 
-
-        newArray.diff(testtt)
-        
-        
-      
-        
-      
 
 
 
@@ -147,14 +200,29 @@ class LeftSideBar extends Component {
             [truu]: { ...stateForClicked, div: this.divFunction(newArray) },
             ready: false
         })
-
-
     }
-    
 
 
-    testerer() {
-        console.log("TEST TEST TEST TEST TEST")
+    filterBrandsFunction(e) {
+        
+        let x = this.props.brands_to_filter
+        
+        if (!x.length){
+          this.props.brandsToFilter(e)
+
+        } else{
+        for (let i = 0; i < x.length; i++) {
+            if (!x.includes(e)){
+                
+               return this.props.brandsToFilter(e)
+                console.log("TRUEEEEE")
+            } else {
+                this.props.deleteBrandsToFilter(e)
+            }
+        }
+    }
+        console.log('clicked state: ', x.length)
+        
     }
 
     displayThermostatDiv() {
@@ -169,78 +237,99 @@ class LeftSideBar extends Component {
     // }
 
     render() {
-
+        var { showLights } = this.props
+        console.log("RENDERED BRANDS: ", this.props.brands_to_filter)
         return (
             <div className="position-fixed">
-            <div className="side-bar-left">
-                <h3> Refine by </h3>
-                <h5>Category</h5>
-                <div className="checkbox-label">
-                    <input id="allbox" type="checkbox" value="all" className="wemo-brand-search" />
-                    <label htmlFor="allbox"><Link to='/allproducts'>All</Link></label>
-                </div>
-                <div className="checkbox-label">
+                <div className="side-bar-left">
+                    <h3> Refine by </h3>
+                    <h5>Category</h5>
+                    <div className="checkbox-label">
+                        <input id="allbox" ref="allbox1" onClick={() => this.getBrandsForAll('allProducts', this.state.allProducts, this.props.showAllProducts)} type="checkbox" value="all" className="wemo-brand-search" />
+                        <label htmlFor="allbox">All</label>
+                    </div>
 
-                    <input id="lightsbox" onClick={() => this.getBrandsForCategory('light_bulb', this.state.light_bulb)} type="checkbox" value="lights" className="wemo-brand-search" />
-                    <label htmlFor="lightsbox"><Link to='/lights' onClick={() => this.getBrandsForCategory('light_bulb', this.state.light_bulb)}>Lights</Link> </label>
-                </div>
-                <div className="checkbox-label">
-                    <input id="lightswitchesbox" onClick={() => this.getBrandsForCategory('light_switch', this.state.light_switch)} type="checkbox" value="light_switch" className="wemo-brand-search" />
-                    <label htmlFor="lightswitchesbox">Light Switches </label>
-                </div>
-                <div className="checkbox-label">
-                    <input id="outletbox" onClick={() => this.getBrandsForCategory('outlet', this.state.outlet)} type="checkbox" className="wemo-brand-search" />
-                    <label htmlFor="outletbox">Outlets </label>
-                </div>
-                <div className="checkbox-label">
-                    <input id="thermostatbox" ref='thermostat' onClick={() => this.getBrandsForCategory('thermostat', this.state.thermostat)} type="checkbox" className="wemo-brand-search" />
-                    <label htmlFor="thermostatbox">Thermostats </label>
-                </div>
-                <div className="checkbox-label">
-                    <input id="speakerbox" ref='smart_speaker' onClick={() => this.getBrandsForCategory('smart_speaker', this.state.smart_speaker)} type="checkbox" className="wemo-brand-search" />
-                    <label htmlFor="speakerbox">Smart Speakers</label>
-                </div>
-                <br />
+                    <div className="checkbox-label">
 
-                <h5>Brands</h5>
-                {this.state.ready ? this.test() : null}
-                {this.state.light_bulb.clicked ? this.state.light_bulb.div : null}
-                {this.state.light_switch.clicked ? this.state.light_switch.div : null}
-                {this.state.outlet.clicked ? this.state.outlet.div : null}
-                {this.state.thermostat.clicked ? this.state.thermostat.div : null}
-                {this.state.smart_speaker.clicked ? this.state.smart_speaker.div : null}
+                        <input id="lightsbox" ref="light-box" onClick={() => this.getBrandsForCategory('light_bulb', this.state.light_bulb, this.props.showLights)} type="checkbox" value="lights" className="wemo-brand-search" />
+                        <label htmlFor="lightsbox" >Lights</label>
+                    </div>
+                    <div className="checkbox-label">
+                        <input id="lightswitchesbox" ref="light-switch-box" onClick={() => this.getBrandsForCategory('light_switch', this.state.light_switch, this.props.showLightSwitches)} type="checkbox" value="light_switch" className="wemo-brand-search" />
+                        <label htmlFor="lightswitchesbox">Light Switches </label>
+                    </div>
+                    <div className="checkbox-label">
+                        <input id="outletbox" ref="outlet-box" onClick={() => this.getBrandsForCategory('outlet', this.state.outlet, this.props.showOutlets)} type="checkbox" className="wemo-brand-search" />
+                        <label htmlFor="outletbox">Outlets </label>
+                    </div>
+                    <div className="checkbox-label">
+                        <input id="thermostatbox" ref="thermostat-box" onClick={() => this.getBrandsForCategory('thermostat', this.state.thermostat, this.props.showThermostats)} type="checkbox" className="wemo-brand-search" />
+                        <label htmlFor="thermostatbox">Thermostats </label>
+                    </div>
+                    <div className="checkbox-label">
+                        <input id="speakerbox" ref="smart-speaker-box" onClick={() => this.getBrandsForCategory('smart_speaker', this.state.smart_speaker, this.props.showSmartSpeakers)} type="checkbox" className="wemo-brand-search" />
+                        <label htmlFor="speakerbox">Smart Speakers</label>
+                    </div>
+                    <br />
+
+                    <h5>Brands</h5>
+                    {this.state.ready ? this.test() : null}
+                    {this.state.allProducts.clicked ? this.state.allProducts.div : null}
+                    {this.state.light_bulb.clicked ? this.state.light_bulb.div : null}
+                    {this.state.light_switch.clicked ? this.state.light_switch.div : null}
+                    {this.state.outlet.clicked ? this.state.outlet.div : null}
+                    {this.state.thermostat.clicked ? this.state.thermostat.div : null}
+                    {this.state.smart_speaker.clicked ? this.state.smart_speaker.div : null}
 
 
 
 
-                <h5>Price</h5>
-                <div className="checkbox-label">
-                    <input type="checkbox" className="wemo-brand-search" />
-                    <label htmlFor="wemo-brand-search">Under $25 </label>
+                    <h5>Price</h5>
+                    <div className="checkbox-label">
+                        <input type="checkbox" className="wemo-brand-search" />
+                        <label htmlFor="wemo-brand-search">Under $25 </label>
+                    </div>
+                    <div className="checkbox-label">
+                        <input type="checkbox" className="wemo-brand-search" />
+                        <label htmlFor="wemo-brand-search">$25 to $50 </label>
+                    </div>
+                    <div className="checkbox-label">
+                        <input type="checkbox" className="wemo-brand-search" />
+                        <label htmlFor="wemo-brand-search">$50 to $100 </label>
+                    </div>
+                    <div className="checkbox-label">
+                        <input type="checkbox" className="wemo-brand-search" />
+                        <label htmlFor="wemo-brand-search">$100 to $200 </label>
+                    </div>
+                    <div className="checkbox-label">
+                        <input type="checkbox" className="wemo-brand-search" />
+                        <label htmlFor="wemo-brand-search">$200 & Above</label>
+                    </div>
+                    <br />
+                    <br />
+                    {this.state.brandsBeingDisplayed}
                 </div>
-                <div className="checkbox-label">
-                    <input type="checkbox" className="wemo-brand-search" />
-                    <label htmlFor="wemo-brand-search">$25 to $50 </label>
-                </div>
-                <div className="checkbox-label">
-                    <input type="checkbox" className="wemo-brand-search" />
-                    <label htmlFor="wemo-brand-search">$50 to $100 </label>
-                </div>
-                <div className="checkbox-label">
-                    <input type="checkbox" className="wemo-brand-search" />
-                    <label htmlFor="wemo-brand-search">$100 to $200 </label>
-                </div>
-                <div className="checkbox-label">
-                    <input type="checkbox" className="wemo-brand-search" />
-                    <label htmlFor="wemo-brand-search">$200 & Above</label>
-                </div>
-                <br />
-                <br />
-                {this.state.brandsBeingDisplayed}
-            </div>
             </div>
         )
     }
 
 }
-export default LeftSideBar
+function mapStateToProps(state) {
+    return state
+}
+
+let actionOutputs = {
+    showLights,
+    showLightSwitches,
+    showAllProducts,
+    showOutlets,
+    showThermostats,
+    showSmartSpeakers,
+    brandsToFilter,
+    deleteBrandsToFilter,
+    filterBrandsTF
+
+}
+
+
+export default connect(mapStateToProps, actionOutputs)(LeftSideBar);
