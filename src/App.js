@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import Router from './Router'
+// import Router from './Router'
 import Amazon from './components/amazon_test'
 import LeftSideBar from './components/navigation/leftSideBar'
-import Lights from './components/Lights'
-import AllProducts from './components/AllProducts'
-import { connect } from 'react-redux'
 import Products from './components/Products'
 // import aws from 'aws-lib';
 // import Login from './components/Login'

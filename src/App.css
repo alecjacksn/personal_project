@@ -333,6 +333,7 @@ body {
 
 .all-products {
   margin-top: 176px;
+  max-height: 238px;
 }
 /* .all-products-div {
   display: flex;

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import {Link} from 'react-router-dom'
-
+import { filterBrandsTF } from '../ducks/reducer'
+import {connect} from 'react-redux'
+import _ from 'underscore-node'
 
 
 class Outlets extends Component {
@@ -18,14 +20,12 @@ class Outlets extends Component {
 
   componentDidMount() {
     axios.get('http://localhost:3232/api/products/outlet').then(res => {
-      console.log("component mount test: ", res)
       this.setState({
         items: res.data,
 
       })
     })
     axios.get('http://localhost:3232/api/products/outlet/images').then(res => {
-      console.log("image mount test: ", res.data)
       this.setState({
         images: res.data
       })
@@ -84,45 +84,88 @@ class Outlets extends Component {
 
 
   displayListings() {
+    var xLength = this.props.brands_to_filter
     var display = this.state.items;
-
-    return display.map((e, i) => {
-      return (<div key={i}>
-        <div className="mapped-products">
-          <div>
-            <div className="mapped-info">
-              <div className="mapped-basic-info">
-                <div className="mapped-title">
-                  <Link to={`/item/${e.productid}`} ><a href="">{e.title} </a></Link><br />
+    var brandsFilteredDisplay = _.without(this.props.brands_to_filter, this.state.items)
+    // console.log("TRUE FALSE FILTERED:", brandsFilteredDisplay)
+    if(xLength.length < 1){
+      this.props.filterBrandsTF(false)
+    }
+    if (this.props.filterBrands) {
+      return display.map((e, i) => {
+        if (brandsFilteredDisplay.includes(e.brand)) {
+          return (<div key={i}>
+            <div className="mapped-products">
+              <div>
+                <div className="mapped-info">
+                  <div className="mapped-basic-info">
+                    <div className="mapped-title">
+                      <Link to={`/item/${e.productid}`} ><a href="">{e.title} </a></Link><br />
+                    </div>
+                    <br />
+                    {e.color ? 'Color: ' + e.color : null}
+                    <br />
+                    {e.brand ? 'Brand: ' + e.brand : null}
+                    <br />
+                    <br />
+                    <br />
+                    Price: {e.price}
+                    <br />
+                    Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
+                  </div>
+                  <div className="mapped-image">
+                    {this.imageFunction(e)}
+                  </div>
                 </div>
-                <br />
-                {e.color ? 'Color: ' + e.color : null}
-                <br />
-                {e.brand ? 'Brand: ' + e.brand : null}
-                <br />
-                <br />
-                <br />
-                Price: {e.price}
-                <br />
-                Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
+
               </div>
-              <div className="mapped-image">
-              {this.imageFunction(e)}
-          </div>
+
+            </div>
+            <div className="product-bottom-border">
             </div>
 
           </div>
 
+
+          )
+        }
+      })
+    } else {
+      return display.map((e, i) => {
+        return (<div key={i}>
+          <div className="mapped-products">
+            <div>
+              <div className="mapped-info">
+                <div className="mapped-basic-info">
+                  <div className="mapped-title">
+                    <Link to={`/item/${e.productid}`} ><a href="">{e.title} </a></Link><br />
+                  </div>
+                  <br />
+                  {e.color ? 'Color: ' + e.color : null}
+                  <br />
+                  {e.brand ? 'Brand: ' + e.brand : null}
+                  <br />
+                  <br />
+                  <br />
+                  Price: {e.price}
+                  <br />
+                  Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
+                </div>
+                <div className="mapped-image">
+                  {this.imageFunction(e)}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="product-bottom-border">
+          </div>
         </div>
-        <div className="product-bottom-border">
-        </div>
-
-      </div>
-
-
-      )
-    })
+        )
+      })
+    }
   }
+
+
   render() {
     const theRender = this.displayListings();
     return (
@@ -133,4 +176,14 @@ class Outlets extends Component {
   }
 }
 
-export default Outlets;
+function mapStateToProps(state) {
+  return state
+}
+
+let actionOutputs = {
+  filterBrandsTF
+}
+
+
+export default connect(mapStateToProps, actionOutputs)(Outlets);
+

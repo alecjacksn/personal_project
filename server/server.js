@@ -190,6 +190,20 @@ app.get('/api/brandnames', (req,res,next) => {
 })
 
 
+
+////////////////////////////            FILTER BY PRICE            /////////////////////////////////
+
+app.get('/api/filterbyprice', (req,res,next) => {
+    req.app.get('db').filterByPrice.under25([req.query.producttype]).then(response => res.status(200).send(response))
+})
+
+app.get('/api/filterbyprice25', (req,res,next) => {
+    req.app.get('db').filterByPrice.between25to50()([req.query.producttype]).then(response => res.status(200).send(response))
+})
+
+
+
+
 //                     aws-lib                          //
 
 

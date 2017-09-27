@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
 import axios from 'axios'
 import _ from 'underscore-node'
-import { Sticky } from 'semantic-ui-react'
 import {
     showLights
     , showLightSwitches
@@ -13,6 +11,11 @@ import {
     , brandsToFilter
     , deleteBrandsToFilter
     , filterBrandsTF
+    , price1filterTF
+    , price2filterTF
+    , price3filterTF
+    , price4filterTF
+    , price5filterTF
 
 } from '../../ducks/reducer'
 import { connect } from 'react-redux'
@@ -30,7 +33,6 @@ class LeftSideBar extends Component {
             category: 'brand',
             selectedCategory: '',
             brandNames: [],
-            brandsBeingDisplayed: [],
             brandsActuallyDisplayed: [],
             allProducts: {
                 clicked: false,
@@ -66,14 +68,6 @@ class LeftSideBar extends Component {
     }
 
 
-    check(e) {
-        var x = e.target.value
-        console.log("Check box checked: ", x)
-        this.setState({
-            clicked: x
-        })
-        console.log("state check:", this.state.clicked)
-    }
 
 
     getBrandsForAll(x, clickedState, reducerTF) {
@@ -97,7 +91,6 @@ class LeftSideBar extends Component {
             this.refs['smart-speaker-box'].checked = false
             axios.get(`http://localhost:3232/api/brandnames?producttype=${x}`)
                 .then(res => {
-                    console.log(res)
                     this.setState({
                         [x]: { ...clickedState, brands: res.data, clicked: true },
                         clicked: x,
@@ -143,92 +136,141 @@ class LeftSideBar extends Component {
         }
     }
 
+    // checkIfBoxWasChecked(e){
+    //     let q = this.props.brands_to_filter
+    //     var e = e;
+    //     if (q.includes(e)){
+    //         console.log("THIS BOX IS TRUEEEEEE")
+    //     }
+    // }
 
 
-    divFunction(e) {
-        var x = []
-        var test = e;
-        test.map((e, i) => {
-            x.push(<div key={i} className="checkbox-label">
-                <input id={test[i]} type="checkbox"  className="wemo-brand-search" />
-                <label htmlFor={test[i]} onClick={() => this.filterBrandsFunction(e)} >{test[i]} </label>
+    // divFunction(e) {
+    //     var x = []
+    //     var test = e;
+    //     var truu = this.state.clicked
+    //     var stateForClicked = this.state[truu]
+    //     test.map((e, i) => {
+    //         this.testNewArrayAndBrands(e) 
+    //         x.push(<div key={i} className="checkbox-label">
+    //             <input id={e} onClick={() => this.filterBrandsFunction(e)}  type="checkbox" className="wemo-brand-search" />
+    //             <label htmlFor={e} >{test[i]} </label>
+    //         </div>)
+    //     })
+    //     return this.setState({
+    //         [truu]: { ...stateForClicked, div: x },
+    //         ready: false
+    //     })
+    // }
 
-            </div>)
-        })
-        this.setState({
-            brandsActuallyDisplayed: x
-        })
-        return x;
+
+    testNewArrayAndBrands(e){
+        let q = this.props.brands_to_filter
+        var w = e
+        for (let i = 0; i < w.length; i++){
+            if(!w.includes(q[i])){ 
+                return this.props.deleteBrandsToFilter(q[i])
+            }
+        }
     }
 
-    test = () => {
-
-
-
-        var diff;
+    isReadyFunction = () => {
+        var x = []
         var truu = this.state.clicked
         var stateForClicked = this.state[truu]
         var newArray = []
-        var x = []
-        var newStateArray = this.state.brandsBeingDisplayed.slice()
-        var testtt;
-        var finalArray;
-        var maybe = this.state.brandsActuallyDisplayed;
+        // var finalArray;
+        // var maybe = this.state.brandsActuallyDisplayed;
         for (var i = 0; i < stateForClicked.brands.length; i++) {
             if (!newArray.includes(stateForClicked.brands[i].brand)) {
+                console.log("filter test:", stateForClicked.brands[i].brand)
                 newArray.push(stateForClicked.brands[i].brand)
             }
         }
 
+        // var j = stateForClicked.brands.filter((e, i) => {
+        //     if(!newArray.includes(e.brand)){
+        //         return newArray.push(e.brand)
+        //     }
+        // })
 
-        testtt = _.uniq(this.state.lastAttempt, newArray)
+        newArray.map((e, i) => {
+                this.testNewArrayAndBrands(e) 
+               return x.push(<div key={i} className="checkbox-label">
+                    <input id={e} onClick={() => this.filterBrandsFunction(e)}  type="checkbox" className="wemo-brand-search" />
+                    <label htmlFor={e} >{e} </label>
+                </div>)
+            })
+
+
+        return this.setState({
+                    [truu]: { ...stateForClicked, div: x },
+                    ready: false
+                })
+            
         // console.log('underscore: ', testtt)
-        this.setState({
-            brandsBeingDisplayed: newStateArray,
-            lastAttempt: testtt
-        })
 
 
 
-        finalArray = _.without(newArray, testtt)
+        // finalArray = _.without(newArray, testtt)
         // console.log('maybe? : ', maybe)
-
-
-
-
-        this.setState({
-            [truu]: { ...stateForClicked, div: this.divFunction(newArray) },
-            ready: false
-        })
-    }
-
-
-    filterBrandsFunction(e) {
+        // testtt.map((e, i) => {
+        //     this.testNewArrayAndBrands(e) 
+        //    return x.push(<div key={i} className="checkbox-label">
+        //         <input id={e} onClick={() => this.filterBrandsFunction(e)}  type="checkbox" className="wemo-brand-search" />
+        //         <label htmlFor={e} >{test[i]} </label>
+        //     </div>)
+        // })
         
+        
+        // return this.setState({
+        //     [truu]: { ...stateForClicked, div: x },
+        //     ready: false
+        // })
+
+    //    return this.divFunction(newArray)
+    // console.log("THIS IS J: ", j)
+
+    }
+    filterBrandsFunction(e) {
         let x = this.props.brands_to_filter
         
         if (!x.length){
           this.props.brandsToFilter(e)
-
+          return this.props.filterBrandsTF(true) 
         } else{
         for (let i = 0; i < x.length; i++) {
             if (!x.includes(e)){
-                
+                this.props.filterBrandsTF(true) 
                return this.props.brandsToFilter(e)
-                console.log("TRUEEEEE")
             } else {
                 this.props.deleteBrandsToFilter(e)
             }
         }
     }
-        console.log('clicked state: ', x.length)
         
     }
 
-    displayThermostatDiv() {
-        var theDiv = this.state.thermostat.div
-        return console.log("console test: ", theDiv)
-    }
+
+    // filterPriceFunction(e) {
+    //     let x = this.props.price_to_filter
+        
+    //     if (!x.length){
+    //       this.props.priceToFilter(e)
+    //       return this.props.filterPriceTF(true) 
+    //     } else{
+    //     for (let i = 0; i < x.length; i++) {
+    //         if (!x.includes(e)){
+    //             this.props.filterPriceTF(true) 
+    //            return this.props.priceToFilter(e)
+    //         } else {
+    //             this.props.deletePriceToFilter(e)
+    //         }
+    //     }
+    // }
+        
+    // }
+
 
     // handleClick(){
     //     this.setState({
@@ -237,8 +279,6 @@ class LeftSideBar extends Component {
     // }
 
     render() {
-        var { showLights } = this.props
-        console.log("RENDERED BRANDS: ", this.props.brands_to_filter)
         return (
             <div className="position-fixed">
                 <div className="side-bar-left">
@@ -248,9 +288,7 @@ class LeftSideBar extends Component {
                         <input id="allbox" ref="allbox1" onClick={() => this.getBrandsForAll('allProducts', this.state.allProducts, this.props.showAllProducts)} type="checkbox" value="all" className="wemo-brand-search" />
                         <label htmlFor="allbox">All</label>
                     </div>
-
                     <div className="checkbox-label">
-
                         <input id="lightsbox" ref="light-box" onClick={() => this.getBrandsForCategory('light_bulb', this.state.light_bulb, this.props.showLights)} type="checkbox" value="lights" className="wemo-brand-search" />
                         <label htmlFor="lightsbox" >Lights</label>
                     </div>
@@ -273,7 +311,7 @@ class LeftSideBar extends Component {
                     <br />
 
                     <h5>Brands</h5>
-                    {this.state.ready ? this.test() : null}
+                    {this.state.ready ? this.isReadyFunction() : null}
                     {this.state.allProducts.clicked ? this.state.allProducts.div : null}
                     {this.state.light_bulb.clicked ? this.state.light_bulb.div : null}
                     {this.state.light_switch.clicked ? this.state.light_switch.div : null}
@@ -286,28 +324,27 @@ class LeftSideBar extends Component {
 
                     <h5>Price</h5>
                     <div className="checkbox-label">
-                        <input type="checkbox" className="wemo-brand-search" />
-                        <label htmlFor="wemo-brand-search">Under $25 </label>
+                        <input id="under25" onClick={() => this.props.price1filterTF(!this.props.price1Filter)} type="checkbox" className="wemo-brand-search" />
+                        <label htmlFor="under25">Under $25 </label>
                     </div>
                     <div className="checkbox-label">
-                        <input type="checkbox" className="wemo-brand-search" />
-                        <label htmlFor="wemo-brand-search">$25 to $50 </label>
+                        <input id="25to50"  onClick={() => this.props.price2filterTF(!this.props.price2Filter)} type="checkbox" className="wemo-brand-search" />
+                        <label htmlFor="25to50">$25 to $50 </label>
                     </div>
                     <div className="checkbox-label">
-                        <input type="checkbox" className="wemo-brand-search" />
-                        <label htmlFor="wemo-brand-search">$50 to $100 </label>
+                        <input id="50to100" onClick={() => this.props.price3filterTF(!this.props.price3Filter)} type="checkbox" className="wemo-brand-search" />
+                        <label htmlFor="50to100">$50 to $100 </label>
                     </div>
                     <div className="checkbox-label">
-                        <input type="checkbox" className="wemo-brand-search" />
-                        <label htmlFor="wemo-brand-search">$100 to $200 </label>
+                        <input id="100to200" onClick={() => this.props.price4filterTF(!this.props.price4Filter)} type="checkbox" className="wemo-brand-search" />
+                        <label htmlFor="100to200">$100 to $200 </label>
                     </div>
                     <div className="checkbox-label">
-                        <input type="checkbox" className="wemo-brand-search" />
-                        <label htmlFor="wemo-brand-search">$200 & Above</label>
+                        <input id="200andabove"  onClick={() => this.props.price5filterTF(!this.props.price5Filter)} type="checkbox" className="wemo-brand-search" />
+                        <label htmlFor="200andabove">$200 & Above</label>
                     </div>
                     <br />
                     <br />
-                    {this.state.brandsBeingDisplayed}
                 </div>
             </div>
         )
@@ -327,8 +364,12 @@ let actionOutputs = {
     showSmartSpeakers,
     brandsToFilter,
     deleteBrandsToFilter,
-    filterBrandsTF
-
+    filterBrandsTF,
+    price1filterTF,
+    price2filterTF,
+    price3filterTF,
+    price4filterTF,
+    price5filterTF
 }
 
 

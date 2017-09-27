@@ -19,10 +19,6 @@ class Products extends Component {
                 {this.props.outlet ? <Outlets /> : null}
                 {this.props.thermostat ? <Thermostats /> : null}
                 {this.props.smart_speaker ? <SmartSpeakers /> : null}
-                <div>
-                    test
-                {/* {console.log("STORE BRAND TEST", this.props.brands_to_filter)} */}
-                </div>
             </div>
         )
     }
