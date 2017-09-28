@@ -21,32 +21,27 @@ class Lights extends Component {
 
   
   componentDidMount() {
-      axios.get('http://localhost:3232/api/products/lights/images').then(res => {
+    axios.get('http://localhost:3232/api/products/lights/images').then(res => {
+      this.setState({
+        images: res.data
+      })
+    })
+    if (this.props.price1Filter) {
+      axios.get('http://localhost:3232/api/filterbyprice?producttype=light_bulb').then(res => {
         this.setState({
-          images: res.data
+          items: res.data,
+
         })
       })
+    } else {
       axios.get('http://localhost:3232/api/products/lights').then(res => {
         this.setState({
           items: res.data,
+
         })
       })
     }
-    
-
-    componentWillReceiveProps(){
-      this.getItemsYo();
-    }
-
-    getItemsYo(){
-      if (this.props.price1Filter) {
-        axios.get('http://localhost:3232/api/filterbyprice?producttype=light_bulb').then(res => {
-          this.setState({
-            items: res.data,
-          })
-        })
-      } 
-    }
+  }
     
 
 

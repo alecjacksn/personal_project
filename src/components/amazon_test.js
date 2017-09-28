@@ -291,41 +291,48 @@ class AWS extends Component {
                 <section className="homepage-header">
                     <div className="homepage-header-top-navbar">
                             <div className='header-logo'>
-                            <span className='header-logo-w'>W</span><div className="logo-splitter">afta</div>
+                            <span className='header-logo-w'>W</span><div className="logo-splitter">Wafta</div>
                             </div>
                             <div>
+                            <input className="homepage-searchbar" placeholder="Search" />
                         <div className="homepage-login-cart">
-                            <Link to='/cart'><Button size="mini" primary animated='vertical'>
-                                <Button.Content hidden>Cart</Button.Content>
-                                <Button.Content visible>
-                                    <Icon name='shop' />
-                                </Button.Content>
-                            </Button>    </Link>
-                            <div className="login-cart-splitter"></div>
-                            <Link to='/login'> <Button size="mini" primary animated='vertical'>
+                            
+                            
+                            <Link to='/login'> <Button className="cart-button-yo" size="large" animated='vertical'>
                                 <Button.Content hidden>Login</Button.Content>
                                 <Button.Content visible>
                                     <Icon name='user' />
                                 </Button.Content>
                             </Button></Link>
+                            <div className="login-cart-splitter"></div>
+                            <Link to='/cart'><Button className="cart-button-yo cart-shopall" size="large" >
+                                <Button.Content visible>
+                                   Shop 
+                                </Button.Content>
+                            </Button>    </Link>
+                            <div className="login-cart-splitter"></div>
+                            <Link to='/cart'><Button className="cart-button-yo" size="big">                                
+                                <Button.Content visible>
+                                    <Icon name='shop' />
+                                </Button.Content>
+                            </Button>    </Link>
                             </div>
                         </div>
-                        <div className="homepage-search-bar-div">
-                            <select className="homepage-select-dropdown">
+                        
+                            {/* <select className="homepage-select-dropdown">
                                 <option value="all">All</option>
                                 <option value="lights">Lights</option>
                                 <option value="light_switches">Light Switches</option>
                                 <option value="wall_plug">Wall Plugs</option>
                                 <option value="smart_speakers">Smart Speakers</option>
-                            </select>
+                            </select> */}
                             {/* <Dropdown className="homepage-select-dropdown" search selection options={dropdownOptions} /> */}
-                            <input className="homepage-searchbar" placeholder="Search" />
                             {/* <button className="submit-button" type="submit"></button> */}
                         </div>
-                    </div>
-                    <div className="homepage-main-navbar">
+                    
+                    {/* <div className="homepage-main-navbar">
                         <div className="alexa-button-div">
-                            {/* <img className="echo-image" src={echoSpeaker} alt="" /> */}
+                            <img className="echo-image" src={echoSpeaker} alt="" /> 
                             <div className="alexa-divider">
                             <Link to='/alexa'><img src={amazonLogo} alt="" className="alexa-button" /></Link>
                             </div>
@@ -333,13 +340,13 @@ class AWS extends Component {
 
                         <div className="google-button-div">
                             <div className="google-home-image">
-                            {/* <Divider /> */}
-                            {/* <div className="google-assistant-divider"> */}
+                   
+                   
                             <Link to='/google'><img src={googleLogo} alt="" className="google-button" /></Link>
                             </div>
                         </div>
                         <div className="alexa-button-div">
-                            {/* <div className="homepod-image"> */}
+    
                             <div className="homekit-divider">
                             <Link to='/homekit'><img src={homeKit} alt="" className="homekit-button" /></Link>
                             </div>
@@ -348,8 +355,8 @@ class AWS extends Component {
                     </div>
                     <div className="divider">
 
-                        {/* <Divider /> */}
-                    </div>
+                 
+                    </div> */}
                     
 
                     {/* <button onClick={() => this.addToDatabase()}>Add to DB</button> */}

@@ -168,8 +168,11 @@ class LeftSideBar extends Component {
         let q = this.props.brands_to_filter
         var w = e
         for (let i = 0; i < w.length; i++){
-            if(!w.includes(q[i])){ 
-                return this.props.deleteBrandsToFilter(q[i])
+            if(w.includes(q[i])){ 
+                console.log("CONSOLE LOG: ", w)
+                return true
+            } else {
+                return false
             }
         }
     }
@@ -183,7 +186,6 @@ class LeftSideBar extends Component {
         // var maybe = this.state.brandsActuallyDisplayed;
         for (var i = 0; i < stateForClicked.brands.length; i++) {
             if (!newArray.includes(stateForClicked.brands[i].brand)) {
-                console.log("filter test:", stateForClicked.brands[i].brand)
                 newArray.push(stateForClicked.brands[i].brand)
             }
         }
@@ -195,9 +197,10 @@ class LeftSideBar extends Component {
         // })
 
         newArray.map((e, i) => {
-                this.testNewArrayAndBrands(e) 
+                var qq = this.testNewArrayAndBrands(e) 
+                console.log("EEEE: ", e)
                return x.push(<div key={i} className="checkbox-label">
-                    <input id={e} onClick={() => this.filterBrandsFunction(e)}  type="checkbox" className="wemo-brand-search" />
+                    <input defaultChecked={qq ? true : false} id={e} onClick={() => this.filterBrandsFunction(e)}  type="checkbox" className="wemo-brand-search" />
                     <label htmlFor={e} >{e} </label>
                 </div>)
             })

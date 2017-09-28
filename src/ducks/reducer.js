@@ -30,6 +30,7 @@ const initialState = {
 
     smart_speaker: false,
 
+    left_NavBar: false,
 
 }
 

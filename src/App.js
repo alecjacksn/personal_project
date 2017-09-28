@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-// import Router from './Router'
+import Router from './Router'
 import Amazon from './components/amazon_test'
 import LeftSideBar from './components/navigation/leftSideBar'
 import Products from './components/Products'
+import { connect } from 'react-redux'
 // import aws from 'aws-lib';
 // import Login from './components/Login'
 // import Prompt from './components/Prompt'
@@ -15,7 +16,6 @@ class App extends Component {
 
     this.state = {
       books: [],
-      lights: true
     }
   }
 
@@ -28,13 +28,15 @@ class App extends Component {
         <div className="all-products">
           <div className="all-products-div">
             <div className="side-bars">
-              <div className="left-test">
-                <LeftSideBar />
-              </div>
+              {this.props.left_NavBar ?
+                <div className="left-test">
+                  <LeftSideBar />
+                </div>
+                : null}
               <div className="listed-products">
                 <div className="show-search-results">
                   <Products />
-                  {/* {Router} */}
+                  {Router}
                 </div>
               </div>
               <div className="side-bar-right-none">
@@ -48,13 +50,15 @@ class App extends Component {
   }
 }
 
-// function mapStateToProps(state) {
-//   return state
-// }
+
+function mapStateToProps(state) {
+  var {
+  left_NavBar
+} = state;
+  return {
+    left_NavBar
+  }
+}
 
 
-
-// export default connect(mapStateToProps)(App);
-
-
-export default App;
+export default connect(mapStateToProps)(App);
