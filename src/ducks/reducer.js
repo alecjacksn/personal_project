@@ -24,6 +24,7 @@ const initialState = {
 
 // light bulbs
 
+
     light_bulb: false,
 
     light_switch: false,
