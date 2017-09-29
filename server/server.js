@@ -11,7 +11,7 @@ const express = require('express')
     , request = require('request')
     , amazon = require('amazon-product-api')
     , listingsController = require('./controllers/listings_controller')
-    
+
 
 
 const client = amazon.createClient({
@@ -20,14 +20,13 @@ const client = amazon.createClient({
     awsSecret: process.env.AMAZONSECRETKEY
 })
 
-    
 
 const app = express();
 app.use(bodyParser.json())
-app.use(cors ())
+app.use(cors())
 
 
-massive (process.env.CONNECTIONSTRING).then(db => {
+massive(process.env.CONNECTIONSTRING).then(db => {
     app.set('db', db);
 })
 
@@ -37,13 +36,71 @@ massive (process.env.CONNECTIONSTRING).then(db => {
 app.use(session({
     secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    expires: 172800000
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 
+
+passport.use(new Auth0Strategy({
+    domain: process.env.AUTH_DOMAIN,
+    clientID: process.env.AUTH_CLIENT_ID,
+    clientSecret: process.env.AUTH_CLIENT_SECRET,
+    callbackURL: process.env.AUTH_CALLBACK
+}, function (accessToken, refreshToken, extraParams, profile, done) {
+    const db = app.get('db');
+    db.users.find_user(profile.id).then(user => {
+        if (user[0]) {
+            return done(null, user[0]);
+        } else {
+            db.users.create_user([profile.displayName, profile.lastname, profile.id, profile.emails[0].value])
+                .then(user => {
+                    return done(null, user[0]);
+                })
+        }
+    })
+}));
+
+passport.serializeUser(function (user, done) {
+    console.log('serializeUser', user)
+    done(null, user);
+});
+
+passport.deserializeUser(function (user, done) {
+    console.log('DEserializeUser', user)
+    // app.get('db').users.find_session_user([user[0].id]).then(user => {
+    //     return done(null, user[0]);
+    // })
+    done(null, user);
+
+    //GET USER AND CART HERE
+});
+
+
+app.get('/auth', passport.authenticate('auth0'));
+
+
+app.get('/auth/callback', passport.authenticate('auth0', {
+    successRedirect: 'http://localhost:3000/#/',
+    failureRedirect: 'http://localhost:3000/#/'
+}))
+
+app.get('/auth/me', (req, res, next) => {
+    if (!req.user) {
+        return res.status(404).send('User not found');
+    } else {
+        console.log("SERVER LOG: ", req.user)
+        return res.status(200).send(req.user);
+    }
+})
+
+app.get('/auth/logout', (req, res) => {
+    req.logOut();
+    return res.redirect(302, 'http://localhost:3000/#/');
+})
 
 // app.get('http://webservices.amazon.com/onca/xml?AWSAccessKeyId=AKIAI27OAG776JDUVLYQ&AssociateTag=personalproje-20&Keywords=smart%20light%20switch&Operation=ItemSearch&ResponseGroup=Images%2CItemAttributes%2CItemIds%2COfferFull%2COfferListings%2COffers%2CReviews&SearchIndex=Electronics&Service=AWSECommerceService&Timestamp=2017-09-11T20%3A16%3A59.000Z&Signature=zystaB9ef%2FQT6OvHqfvIowhPPPk7M2S%2FD2Mh8HNTMyQ%3D'
 // , (req, res, next) => {
@@ -60,100 +117,100 @@ app.use(passport.session());
 
 
 
-app.get('/api/products', ( req, res, next ) => {
-    req.app.get('db').allProducts().then (prod => res.status(200).send(prod))
+app.get('/api/products', (req, res, next) => {
+    req.app.get('db').allProducts().then(prod => res.status(200).send(prod))
 })
 
-app.get('/api/productimages', (req,res,next) => {
-    req.app.get('db').images.getImagesForProducts().then (image => res.status(200).send(image))
+app.get('/api/productimages', (req, res, next) => {
+    req.app.get('db').images.getImagesForProducts().then(image => res.status(200).send(image))
 })
 
 app.get('/api/products/lights', (req, res, next) => {
-    req.app.get('db').allLights().then (response => res.status(200).send(response))
+    req.app.get('db').allLights().then(response => res.status(200).send(response))
 })
 
 app.get('/api/products/lights/images', (req, res, next) => {
-    req.app.get('db').images.lightsPictures().then (response => res.status(200).send(response))
+    req.app.get('db').images.lightsPictures().then(response => res.status(200).send(response))
 })
 
-app.get('/api/item/:id' , listingsController.itemClicked);
+app.get('/api/item/:id', listingsController.itemClicked);
 
-app.get('/api/item/image/:id', (req,res,next) => {
+app.get('/api/item/image/:id', (req, res, next) => {
     // let { prodid } = req.body
     req.app.get('db').images.itemClickedPictures(req.params.id).then(response => res.status(200).send(response))
 });
 
 
-app.get('/api/products/light_switch', (req,res,next) => {
+app.get('/api/products/light_switch', (req, res, next) => {
     req.app.get('db').light_switch().then(prod => res.status(200).send(prod))
 })
 
 app.get('/api/products/light_switch/images', (req, res, next) => {
-    req.app.get('db').images.lightSwitchPictures().then (response => res.status(200).send(response))
+    req.app.get('db').images.lightSwitchPictures().then(response => res.status(200).send(response))
 })
 
 
-app.get('/api/products/outlet', (req,res,next) => {
+app.get('/api/products/outlet', (req, res, next) => {
     req.app.get('db').outlet().then(prod => res.status(200).send(prod))
 })
 
 app.get('/api/products/outlet/images', (req, res, next) => {
-    req.app.get('db').images.outletPictures().then (response => res.status(200).send(response))
+    req.app.get('db').images.outletPictures().then(response => res.status(200).send(response))
 })
 
 
-app.get('/api/products/thermostat', (req,res,next) => {
+app.get('/api/products/thermostat', (req, res, next) => {
     req.app.get('db').thermostat().then(prod => res.status(200).send(prod))
 })
 
 app.get('/api/products/thermostat/images', (req, res, next) => {
-    req.app.get('db').images.thermostatPictures().then (response => res.status(200).send(response))
+    req.app.get('db').images.thermostatPictures().then(response => res.status(200).send(response))
 })
 
 
-app.get('/api/products/smart_speaker', (req,res,next) => {
-    let {query} = req
+app.get('/api/products/smart_speaker', (req, res, next) => {
+    let { query } = req
     req.app.get('db').smartSpeaker(query.producttype).then(prod => res.status(200).send(prod))
 })
 
 app.get('/api/products/smart_speaker/images', (req, res, next) => {
-    req.app.get('db').images.smartSpeakerPictures().then (response => res.status(200).send(response))
+    req.app.get('db').images.smartSpeakerPictures().then(response => res.status(200).send(response))
 })
 
 
 //////////////////////////              ALEXA                   ////////////////////////////////
 
 
-app.get('/api/alexa', (req,res,next) => {
+app.get('/api/alexa', (req, res, next) => {
     req.app.get('db').filter.allAlexa().then(response => res.status(200).send(response))
 })
 
-app.get('/api/alexaimages', (req,res,next) => {
-    req.app.get('db').images.alexaImages().then (image => res.status(200).send(image))
+app.get('/api/alexaimages', (req, res, next) => {
+    req.app.get('db').images.alexaImages().then(image => res.status(200).send(image))
 })
 
 
 //////////////////////////              GOOGLE                   ////////////////////////////////
 
 
-app.get('/api/google', (req,res,next) => {
+app.get('/api/google', (req, res, next) => {
     req.app.get('db').filter.allGoogle().then(response => res.status(200).send(response))
 })
 
-app.get('/api/googleimages', (req,res,next) => {
-    req.app.get('db').images.googleImages().then (image => res.status(200).send(image))
+app.get('/api/googleimages', (req, res, next) => {
+    req.app.get('db').images.googleImages().then(image => res.status(200).send(image))
 })
 
 
 //////////////////////////              HOMEKIT                   ////////////////////////////////
 
 
-app.get('/api/homekit', (req,res,next) => {
+app.get('/api/homekit', (req, res, next) => {
     req.app.get('db').filter.homeKit().then(response => res.status(200).send(response))
 })
 
-app.get('/api/homekitimages', (req,res,next) => {
-    req.app.get('db').images.homeKitimages().then (image => res.status(200).send(image))
+app.get('/api/homekitimages', (req, res, next) => {
+    req.app.get('db').images.homeKitimages().then(image => res.status(200).send(image))
 })
 
 
@@ -162,30 +219,30 @@ app.get('/api/homekitimages', (req,res,next) => {
 
 
 
-app.get('/api/brands/wemo', (req,res,next) => {
-    req.app.get('db').brands.Wemo().then(response => res.status(200).send(response) )
+app.get('/api/brands/wemo', (req, res, next) => {
+    req.app.get('db').brands.Wemo().then(response => res.status(200).send(response))
 })
 
 
-app.get('/api/brands/wemo/images', (req,res,next) => {
-    req.app.get('db').brands.WemoImages().then (image => res.status(200).send(image))
+app.get('/api/brands/wemo/images', (req, res, next) => {
+    req.app.get('db').brands.WemoImages().then(image => res.status(200).send(image))
 })
 
-app.get('/api/brands', ( req, res, next ) => {
+app.get('/api/brands', (req, res, next) => {
     let { query } = req
 
-    req.app.get('db').brands.Wemo( query.brand ).then( filtered => res.status(200).send( filtered ) )
-                     
+    req.app.get('db').brands.Wemo(query.brand).then(filtered => res.status(200).send(filtered))
+
 })
 
 
 
-app.get('/api/brandnames', (req,res,next) => {
-    let {query} = req
-    if(query.producttype === 'allProducts'){
+app.get('/api/brandnames', (req, res, next) => {
+    let { query } = req
+    if (query.producttype === 'allProducts') {
         req.app.get('db').brands.allBrands().then(response => res.status(200).send(response))
     } else {
-    req.app.get('db').brands.brandsForProductType(query.producttype).then(response => res.status(200).send(response))
+        req.app.get('db').brands.brandsForProductType(query.producttype).then(response => res.status(200).send(response))
     }
 })
 
@@ -193,11 +250,11 @@ app.get('/api/brandnames', (req,res,next) => {
 
 ////////////////////////////            FILTER BY PRICE            /////////////////////////////////
 
-app.get('/api/filterbyprice', (req,res,next) => {
+app.get('/api/filterbyprice', (req, res, next) => {
     req.app.get('db').filterByPrice.under25([req.query.producttype]).then(response => res.status(200).send(response))
 })
 
-app.get('/api/filterbyprice25', (req,res,next) => {
+app.get('/api/filterbyprice25', (req, res, next) => {
     req.app.get('db').filterByPrice.between25to50()([req.query.producttype]).then(response => res.status(200).send(response))
 })
 
@@ -264,10 +321,10 @@ app.get('/api/filterbyprice25', (req,res,next) => {
 //\\
 // \\                                                                    //
 //  \\                                                                  //
-    //                       AMAZON SEARCH API                         //
-   //                                                                  \\
-  //                                                                    \\
- //                                                                      \\
+//                       AMAZON SEARCH API                         //
+//                                                                  \\
+//                                                                    \\
+//                                                                      \\
 
 
 
@@ -279,7 +336,7 @@ app.get('/api/filterbyprice25', (req,res,next) => {
 //         responseGroup: 'ItemAttributes,Offers,OfferSummary,ItemIds,Images,Reviews',
 //       }).then(function(result){
 //         res.status(200).send(result)
-        
+
 //       }).catch(function(err){
 //         console.log(err);
 //       });
@@ -289,19 +346,19 @@ app.get('/api/filterbyprice25', (req,res,next) => {
 //\\
 // \\                                                                    //
 //  \\                                                                  //
-    //                       AMAZON SEARCH API                         //
-   //                                                                  \\
-  //                                                                    \\
- //                                                                      \\
+//                       AMAZON SEARCH API                         //
+//                                                                  \\
+//                                                                    \\
+//                                                                      \\
 
 
 
 
- app.post('/api/post',  ( req, res, next ) => {
+app.post('/api/post', (req, res, next) => {
     let { asin, offerlistingid, color, brand, price, customerreview, productsize, model, warranty, feature0, feature1, feature2, feature3, feature4, title } = req.body;
 
-    req.app.get('db').postListing( [asin, offerlistingid, color, brand, price, customerreview, productsize, model, warranty, feature0, feature1, feature2, feature3, feature4, title] )
-                     .then( property => res.status(200).send( property ) );
+    req.app.get('db').postListing([asin, offerlistingid, color, brand, price, customerreview, productsize, model, warranty, feature0, feature1, feature2, feature3, feature4, title])
+        .then(property => res.status(200).send(property));
 })
 
 

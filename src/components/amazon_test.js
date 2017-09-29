@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 // import Slider from '../components/slider/ImageSlider'
-import { updateProductid } from '../ducks/reducer'
+import { updateProductid, homeButton, shopButton, getUserInfo } from '../ducks/reducer'
+// import {getUserInfo} from '../ducks/userReducer'
 import { connect } from 'react-redux'
 import 'semantic-ui-css/semantic.min.css'
 import { Button, Icon, Divider } from 'semantic-ui-react'
@@ -43,16 +44,16 @@ class AWS extends Component {
     }
 
 
-    componentDidMount() {
+    componentDidMount() { 
+        this.props.getUserInfo();
+        
         axios.get('http://localhost:3232/api/products').then(res => {
-            // console.log("component mount test: ", res)
             this.setState({
                 items: res.data,
 
             })
         })
         axios.get('http://localhost:3232/api/productimages').then(res => {
-            // console.log("image mount test: ", res.data)
             this.setState({
                 images: res.data
             })
@@ -266,7 +267,7 @@ class AWS extends Component {
     //                             {this.imageFunction(e)}
     //                         </div>
     //                     </div>
-                  
+
     //                 </div>
 
     //             </div>
@@ -282,54 +283,63 @@ class AWS extends Component {
 
 
     render() {
-
         // var {updateProductid} = this.props;
-
         return (
             <div className="container">
                 {/* <h1>HOME PAGE</h1> */}
                 <section className="homepage-header">
                     <div className="homepage-header-top-navbar">
-                            <div className='header-logo'>
-                            <span className='header-logo-w'>W</span><div className="logo-splitter">Wafta</div>
+                            <Link to='/'><div className='header-logo'>
+                                <span  className='header-logo-w'>W</span><div className="logo-splitter">Wafta</div>
+                        <div className="logo-button">
                             </div>
-                            <div>
+                        </div></Link>
+                        <div>
+                          
+                           
                             <input className="homepage-searchbar" placeholder="Search" />
-                        <div className="homepage-login-cart">
-                            
-                            
-                            <Link to='/login'> <Button className="cart-button-yo" size="large" animated='vertical'>
-                                <Button.Content hidden>Login</Button.Content>
-                                <Button.Content visible>
-                                    <Icon name='user' />
+                            <div className="homepage-login-cart">
+            
+                        {this.props.user.id ? <a href='http://localhost:3232/auth/logout'><Button className="cart-button-yo" size="large" animated='vertical'>
+                                    <Button.Content hidden>Logout</Button.Content>
+                                    <Button.Content visible>
+                                        Hi {this.props.user.firstname.split(" ")[0]}!
+                                    </Button.Content>
+                                </Button></a> 
+                                :
+                            <a href={ process.env.REACT_APP_LOGIN }><Button className="cart-button-yo" size="large" animated='vertical'>
+                                    <Button.Content hidden>Login</Button.Content>
+                                    <Button.Content visible>
+                                        <Icon name='user' />
+                                    </Button.Content>
+                                </Button></a>
+                                 }
+                                <div className="login-cart-splitter"></div>
+                                <Link to='/shop'><Button className="cart-button-yo cart-shopall" size="large" >
+                                    <Button.Content visible>
+                                        Shop
                                 </Button.Content>
-                            </Button></Link>
-                            <div className="login-cart-splitter"></div>
-                            <Link to='/cart'><Button className="cart-button-yo cart-shopall" size="large" >
-                                <Button.Content visible>
-                                   Shop 
-                                </Button.Content>
-                            </Button>    </Link>
-                            <div className="login-cart-splitter"></div>
-                            <Link to='/cart'><Button className="cart-button-yo" size="big">                                
-                                <Button.Content visible>
-                                    <Icon name='shop' />
-                                </Button.Content>
-                            </Button>    </Link>
+                                </Button> </Link>
+                                <div className="login-cart-splitter"></div>
+                                <Link to='/cart'><Button className="cart-button-yo" size="big">
+                                    <Button.Content visible>
+                                        <Icon name='shop' />
+                                    </Button.Content>
+                                </Button>    </Link>
                             </div>
                         </div>
-                        
-                            {/* <select className="homepage-select-dropdown">
+
+                        {/* <select className="homepage-select-dropdown">
                                 <option value="all">All</option>
                                 <option value="lights">Lights</option>
                                 <option value="light_switches">Light Switches</option>
                                 <option value="wall_plug">Wall Plugs</option>
                                 <option value="smart_speakers">Smart Speakers</option>
                             </select> */}
-                            {/* <Dropdown className="homepage-select-dropdown" search selection options={dropdownOptions} /> */}
-                            {/* <button className="submit-button" type="submit"></button> */}
-                        </div>
-                    
+                        {/* <Dropdown className="homepage-select-dropdown" search selection options={dropdownOptions} /> */}
+                        {/* <button className="submit-button" type="submit"></button> */}
+                    </div>
+
                     {/* <div className="homepage-main-navbar">
                         <div className="alexa-button-div">
                             <img className="echo-image" src={echoSpeaker} alt="" /> 
@@ -357,7 +367,7 @@ class AWS extends Component {
 
                  
                     </div> */}
-                    
+
 
                     {/* <button onClick={() => this.addToDatabase()}>Add to DB</button> */}
 
@@ -376,7 +386,10 @@ function mapStateToProps(state) {
 }
 
 let actionOutputs = {
-    updateProductid
+    updateProductid,
+    homeButton,
+    shopButton,
+    getUserInfo
 }
 
 export default connect(mapStateToProps, actionOutputs)(AWS)
@@ -386,7 +399,7 @@ export default connect(mapStateToProps, actionOutputs)(AWS)
 
 
 
-
+getUserInfo
 
 
 

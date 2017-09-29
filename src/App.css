@@ -197,14 +197,19 @@ body {
   padding-left: 92px;
   color: #999;
   font-size: 16px;
+  /* height: 50px; */
 }
 
+
+
 .header-logo-w {
+  position: relative;
   color: rgb(41, 134, 205);
   font-size: 60px;
   font-family: 'Chicle', cursive;
   margin-bottom: 5px;
 }
+
 
 .logo-splitter{
   /* width: 45px; */
@@ -215,6 +220,17 @@ body {
   padding-top: 3px;
   /* margin-bottom: 5px; */
 }
+
+.logo-button{
+  position: fixed;
+  height: 40px;
+  width: 100px;
+  /* height: 80px; */
+  /* background: red; */
+  z-index: 700;
+  cursor: pointer;
+}
+
 
 .homepage-login-cart {
   margin-top: -35px;
@@ -297,6 +313,7 @@ body {
   background-size: 75%;
   background-position: bottom right;
   height: 100vh;  
+  
 }
 
 .home-page-background-grad {
@@ -304,7 +321,7 @@ body {
   height:100vh;
   width: 100%;
   background: none; 
-  background: linear-gradient(to left,  rgba(255,255,255,0.2),rgba(255,255,255,.6), rgba(255,255,255,1), rgba(255,255,255,1));
+  background: linear-gradient(to left,  rgba(255,255,255,0.2),rgba(255,255,255,.1), rgba(255,255,255,1), rgba(255,255,255,1));
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 );
   text-align: left;
   z-index: 30;
@@ -336,30 +353,89 @@ body {
 
 .Alexa-header{
   font-Size: 50px;
-  float: right;
-  color: rgba(41, 134, 205, 1);
+  color: rgba(0,0,0, .4);
+  padding-right: 1%;
 }
 
 
 .alexa-tab-homepage{
-  width: 100%;
-  height: 40vh;
-  background: rgba(0,0,0, .3);
-  margin-top: 5%;
+  position: relative;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  width: 100%;
+  height: 40vh;
+  background: url('./pictures/logo_amazon.svg') no-repeat;
+  background-size: 40%;
+  background-position: center left;
+  margin-top: 20px;
+  box-shadow: 2px 2px 5px solid rgba(0,0,0, 1);
+  z-index: 20;
+}
+
+.alexa-grad{
+  position: relative;
+  height:41vh;
+  width: 100%;
+  background: none; 
+  background: linear-gradient(to right,  rgba(0,0,0,0) rgba(15,119,164,.2), rgba(15,119,164,.6));
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 );
+  text-align: left;
+  z-index: 30;
+  box-shadow: 2px 2px 5px solid rgba(0,0,0, 1);
+}
+
+.google-tab-homepage{
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 50%;
+  height: 40vh;
+  background: url('./pictures/Google_Assistant_Logo.svg') no-repeat;
+  background-size: 40%;
+  background-position: center right;
+  /* margin-top: 20px; */
+  box-shadow: 2px 2px 5px solid rgba(0,0,0, 1);
+  z-index: 20;
 }
 
 
 
 
+.google-grad{
+  position: relative;
+  float: right;
+  /* height:41vh; */
+  width: 100%;
+  background: none; 
+  background: linear-gradient(to left,  rgba(0,0,0,0) rgba(70,136,241,.2), rgba(70,136,241,.4));
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 );
+  text-align: left;
+  z-index: 30;
+  box-shadow: 2px 2px 5px solid rgba(0,0,0, 1);
+}
+
+.google-header{
+  color: white;
+  padding-right: 45px;
+}
+
+.grad-container{
+  height: 41vh;
+  width: 50%;
+  /* box-shadow: 2px 5px 5px rgba(0,0,0, .53); */
+}
 
 /*////////////////////                  PRODUCTS HOMEPAGE SECTION                  //////////////////*/
 
+.products-section{
+  height: 93vh;
+  width: 100%;
+}
 
 .products-Container{
-  margin-top: 5%;
+  /* margin-top: 20px; */
   padding-top: 2px;
   text-align: center !important;
   /* margin-top: -6px; */
@@ -367,7 +443,10 @@ body {
   width: 100%;
   background: rgba(250,250,250, 1);
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  flex-flow: wrap;
+  padding: 35px;
+  /* box-shadow: 3px 3px 5px rgba(0,0,0, .53); */
 }
 
 .products-Container h3{
@@ -394,6 +473,9 @@ body {
   height: 30vh;
   background: white;
   width: 210px;
+  box-shadow: 0px 3px 5px rgba(0,0,0, .23);
+  margin-top: 45px;
+  
 }
 
 .product-type-box img{ 
@@ -401,10 +483,7 @@ body {
   height: 24.5vh;
 }
 
-.AllBox{
-  height: 35vh;
-  background:white;
-}
+
 
 
 /*////////////////////                  ALEXA NAV BAR                  //////////////////*/
@@ -511,14 +590,11 @@ body {
 
 
 
-/* .all-products {
-  margin-top: 176px;
-  max-height: 238px;
-} */
 /* .all-products-div {
   display: flex;
   flex-wrap: wrap;
 } */
+
 
 
 .mapped-info {
@@ -603,8 +679,8 @@ body {
 
 
 .show-search-results {
-  margin-top: 10px;
-  
+  margin-top: 155px;
+
 }
 
 
@@ -656,6 +732,7 @@ label {
   box-shadow: 8px 8px 20px rgba(0,0,0, .1);
   overflow: auto;
   z-index: 60;
+  margin-top: 100px;
 }
 
 .side-bar-left:hover {
@@ -713,7 +790,16 @@ overflow: auto;
     justify-content: flex-end;
     width: 100%;
   
+    
     /* margin-left: -30px; */
+  }
+
+  .background-image-font{
+    
+    background-size: cover;
+    
+    
+    
   }
 }
 

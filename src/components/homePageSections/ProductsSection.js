@@ -11,7 +11,8 @@ class ProductsSection extends Component {
         return (
             <div className="products-Container">
                 <div className="product-type-box AllBox">
-                    
+                <h3>Shop All</h3>
+                <div className="underline-divider"></div>
                 </div>
                 <div className="product-type-box">
                 <h3>Lights</h3>
@@ -37,6 +38,21 @@ class ProductsSection extends Component {
                 <h3>Smart Speakers </h3>
                 <div className="underline-divider"></div>
                     <img className="display-lightbulb-image" src={SmartSpeaker} alt="" />
+                </div>
+                <div className="product-type-box">
+                <h3>Shop Alexa </h3>
+                <div className="underline-divider"></div>
+                    
+                </div>
+                <div className="product-type-box">
+                <h3>Google Assistant</h3>
+                <div className="underline-divider"></div>
+                 
+                </div>
+                <div className="product-type-box">
+                <h3>HomeKit</h3>
+                <div className="underline-divider"></div>
+                
                 </div>
             </div>
         );

@@ -17,14 +17,24 @@ const initialState = {
 
     filterPrice: false,
 
+
+    
+    
     brands_to_filter: [],
     filterBrands: false,
-
+    
     allProducts: false,
+    
+    ready: false,
+
 
 // light bulbs
-
     light_bulb: false,
+    light_bulb_brands: [],
+    light_bulb_brands_div: [],
+
+
+
 
     light_switch: false,
 
@@ -39,6 +49,10 @@ const initialState = {
     home_page: false,
 
 }
+
+
+const IS_READY = 'IS_READY';
+
 
 const GET_USER_INFO = 'GET_USER_INFO';
 
@@ -69,7 +83,16 @@ const REMOVE_BRANDS_TO_FILTER = 'REMOVE_BRANDS_TO_FILTER'
 
 const UPDATED_PRODUCTID = 'UPDATE_PRODUCTID';
 const SHOW_ALL_PRODUCTS = 'SHOW_ALL_PRODUCTS';
+
+
+
+
+// LIGHT_BULBS 
 const SHOW_ALL_LIGHTS = 'SHOW_ALL_LIGHTS';
+const GET_LIGHT_BULB_BRANDS = 'GET_LIGHT_BULB_BRANDS';
+const LIGHT_BULB_BRANDS_DIV = 'LIGHT_BULB_BRANDS_DIV'
+
+
 const SHOW_ALL_LIGHT_SWITCH = 'SHOW_ALL_LIGHT_SWTICH';
 const SHOW_ALL_OUTLETS = 'SHOW_ALL_OUTLETS';
 const SHOW_ALL_THERMOSTATS = 'SHOW_ALL_THERMOSTATS';
@@ -98,8 +121,25 @@ function reducer(state = initialState, action) {
         case SHOW_ALL_PRODUCTS:
             return Object.assign({}, state, { allProducts: action.payload })
 
+
+
+        case IS_READY:
+            return (Object.assign({}, state, {ready: action.input}))
+
+        // LIGHT BULBS
+
+
         case SHOW_ALL_LIGHTS:
             return Object.assign({}, state, { light_bulb: action.payload });
+
+
+        case GET_LIGHT_BULB_BRANDS:
+            return Object.assign({}, state, {light_bulb_brands: action.payload})
+
+        case LIGHT_BULB_BRANDS_DIV:
+            return Object.assign({}, state, {light_bulb_brands_div: action.payload})
+
+
 
         case SHOW_ALL_LIGHT_SWITCH:
             return Object.assign({}, state, { light_switch: action.payload });
@@ -157,6 +197,8 @@ function reducer(state = initialState, action) {
 
         case SHOP_PAGE:
             return Object.assign({}, state, { left_NavBar: true, home_page: false })
+
+        
         // case GET_ITEM:
         // return Object.assign({}, state, {item: action.payload})
 
@@ -200,12 +242,41 @@ export function showAllProducts(click) {
 }
 
 
+export function isReady(click){
+    return {
+        type: IS_READY,
+        payload: click
+    }
+}
+
+
+// LIGHT BULBS
+
+
 export function showLights(click) {
     return {
         type: SHOW_ALL_LIGHTS,
         payload: click
     }
 }
+
+
+export function getLightBulbBrands(brands){
+    return {
+        type: GET_LIGHT_BULB_BRANDS,
+        payload: brands
+    }
+}
+
+
+export function LightBulbBrandsDiv(div){
+    return {
+        type: LIGHT_BULB_BRANDS_DIV,
+        payload: div
+    }
+}
+
+
 
 
 
