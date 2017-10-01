@@ -1,1 +1,1 @@
-SELECT * from products WHERE price < '25.01';
+SELECT * from products WHERE price < '25.01' order by price;

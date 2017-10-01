@@ -87,8 +87,6 @@ function reducer(state = initialState, action) {
     var x = state.brands_to_filter
     var q = state.price_to_filter
     
-    // console.log('TYPE ', action.type)
-    // console.log('action.payload: ', action.payload)
     switch (action.type) {
 
         case GET_USER_INFO + '_FULFILLED':

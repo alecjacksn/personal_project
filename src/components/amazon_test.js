@@ -333,6 +333,7 @@ class AWS extends Component {
                                 </Button> </Link>
                                 <div className="login-cart-splitter"></div>
                                 <Link to='/cart'><Button className="cart-button-yo" size="big">
+                                    
                                     <Button.Content visible>
                                         <Icon name='shop' />
                                     </Button.Content>

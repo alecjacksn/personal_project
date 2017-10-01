@@ -1,0 +1,1 @@
+SELECT * from products WHERE price > '50.01' AND price < '100.01' AND producttype= $1 order by price

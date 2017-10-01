@@ -329,7 +329,7 @@ body {
 
 
 .home-page-background-grad h1 {
-  padding-top: 250px;
+  padding-top: 220px;
   padding-left: 100px;
   font-size: 50px;
   color: rgba(0,0,0, .3);
@@ -761,12 +761,11 @@ label {
   width: 195px;
   padding: 5px;
   border-right: 1.1px solid rgba(226,226,227, 1);
-  margin-top: -76px;
-  padding-top: 30px;
+  padding-top: 20px;
   /* z-index: 100vh 100%; */
   background: white;
   box-shadow: 8px 8px 20px rgba(0,0,0, .1);
-  overflow: auto;
+  
   z-index: 60;
   margin-top: 100px;
 }
@@ -781,9 +780,16 @@ overflow: auto;
   font-size: 16px;
   padding-left: 2px;
   margin-bottom: 5px;
+  margin-top: 10px;
 }
 
-
+.side-bar-left-brands{
+  max-height: 140px;
+  overflow: initial;
+}
+.side-bar-left-brands{
+  overflow: auto;
+}
 
 .checkbox-label {
   display: flex;

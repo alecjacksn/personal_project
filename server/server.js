@@ -251,9 +251,27 @@ app.get('/api/brandnames', (req, res, next) => {
 
 ////////////////////////////            FILTER BY PRICE            /////////////////////////////////
 
+
 app.get('/api/filterallbyprice', (req, res, next) => {
     req.app.get('db').filterByPrice.allUnder25().then(response => res.status(200).send(response))
 })
+
+app.get('/api/filterallbyprice25', (req, res, next) => {
+    req.app.get('db').filterByPrice.allBetween25to50().then(response => res.status(200).send(response))
+})
+
+app.get('/api/filterallbyprice50', (req, res, next) => {
+    req.app.get('db').filterByPrice.allBetween50to100().then(response => res.status(200).send(response))
+})
+
+app.get('/api/filterallbyprice100', (req, res, next) => {
+    req.app.get('db').filterByPrice.allBetween100to200().then(response => res.status(200).send(response))
+})
+
+app.get('/api/filterallbyprice200', (req, res, next) => {
+    req.app.get('db').filterByPrice.allOver200().then(response => res.status(200).send(response))
+})
+
 
 
 
@@ -262,10 +280,20 @@ app.get('/api/filterbyprice', (req, res, next) => {
 })
 
 app.get('/api/filterbyprice25', (req, res, next) => {
-    req.app.get('db').filterByPrice.between25to50()([req.query.producttype]).then(response => res.status(200).send(response))
+    req.app.get('db').filterByPrice.between25to50([req.query.producttype]).then(response => res.status(200).send(response))
 })
 
+app.get('/api/filterbyprice50', (req, res, next) => {
+    req.app.get('db').filterByPrice.between50to100([req.query.producttype]).then(response => res.status(200).send(response))
+})
 
+app.get('/api/filterbyprice100', (req, res, next) => {
+    req.app.get('db').filterByPrice.between100to200([req.query.producttype]).then(response => res.status(200).send(response))
+})
+
+app.get('/api/filterbyprice200', (req, res, next) => {
+    req.app.get('db').filterByPrice.over200([req.query.producttype]).then(response => res.status(200).send(response))
+})
 
 
 //                     aws-lib                          //

@@ -14,7 +14,11 @@ class SmartSpeakers extends Component {
       items: [],
       images: [],
       prodIdClicked: '',
-      priceItems: []
+      priceItems: [],
+      filterPrice2: [],
+      filterPrice3: [],
+      filterPrice4: [],
+      filterPrice5: []
     }
   }
 
@@ -35,6 +39,34 @@ class SmartSpeakers extends Component {
       axios.get('/api/filterbyprice?producttype=smart_speaker').then(res => {
         this.setState({
           priceItems: res.data,
+        })
+      })
+    }
+    if (this.props.price2Filter) {
+      axios.get('/api/filterbyprice25?producttype=smart_speaker').then(res => {
+        this.setState({
+          filterPrice2: res.data,
+        })
+      })
+    }
+    if (this.props.price3Filter) {
+      axios.get('/api/filterbyprice50?producttype=smart_speaker').then(res => {
+        this.setState({
+          filterPrice3: res.data,
+        })
+      })
+    }
+    if (this.props.price4Filter) {
+      axios.get('/api/filterbyprice100?producttype=smart_speaker').then(res => {
+        this.setState({
+          filterPrice4: res.data,
+        })
+      })
+    }
+    if (this.props.price5Filter) {
+      axios.get('/api/filterbyprice200?producttype=smart_speaker').then(res => {
+        this.setState({
+          filterPrice5: res.data,
         })
       })
     }
@@ -74,6 +106,26 @@ componentWillReceiveProps() {
   axios.get('/api/filterbyprice?producttype=smart_speaker').then(res => {
     this.setState({
       priceItems: res.data,
+    })
+  })
+  axios.get('/api/filterbyprice25?producttype=smart_speaker').then(res => {
+    this.setState({
+      filterPrice2: res.data,
+    })
+  })
+  axios.get('/api/filterbyprice50?producttype=smart_speaker').then(res => {
+    this.setState({
+      filterPrice3: res.data,
+    })
+  })
+  axios.get('/api/filterbyprice100?producttype=smart_speaker').then(res => {
+    this.setState({
+      filterPrice4: res.data,
+    })
+  })
+  axios.get('/api/filterbyprice200?producttype=smart_speaker').then(res => {
+    this.setState({
+      filterPrice5: res.data,
     })
   })
 }
@@ -184,10 +236,13 @@ componentWillReceiveProps() {
   }
 
 
-  displayListingsByPrice() {
-    var xLength = this.props.brands_to_filter
-    var pLength = this.props.price_to_filter
-    var display = this.state.priceItems;
+  whichPricesToFilter(brandsToFilter, priceToFilter, ){
+    return this.displayListingsByPrice(brandsToFilter, priceToFilter)
+  }
+
+  displayListingsByPrice(brandsToFilter, priceToFilter) {
+    var xLength = brandsToFilter;
+    var display = priceToFilter;
     var brandsFilteredDisplay = _.without(this.props.brands_to_filter, this.state.items)
 
 
@@ -272,13 +327,35 @@ componentWillReceiveProps() {
   }
 
 
+  testWhatToDisplay(){
+    if(
+      this.props.price1Filter === false &&
+      this.props.price2Filter === false &&
+      this.props.price3Filter === false &&
+      this.props.price4Filter === false &&
+      this.props.price5Filter === false 
+    ){
+      return true
+    } else {
+      return false
+    }
+  }
+
+
 
   render() {
     const theRender = this.displayListings();
-    const filterByPrice = this.displayListingsByPrice()
+    const testWhat = this.testWhatToDisplay();
+    // const filterByPrice = this.whichPricesToFilter(this.props.brands_to_filter, this.state.priceItems)
+    // const theBrandFilteredRender = this.displayBrandFilteredListings();
     return (
       <div>
-        {this.props.price1Filter ? filterByPrice : theRender}
+        {testWhat ? theRender : null}
+        {this.props.price1Filter ? this.whichPricesToFilter(this.props.brands_to_filter, this.state.priceItems) : null}
+        {this.props.price2Filter ? this.whichPricesToFilter(this.props.brands_to_filter, this.state.filterPrice2) : null}
+        {this.props.price3Filter ? this.whichPricesToFilter(this.props.brands_to_filter, this.state.filterPrice3) : null}
+        {this.props.price4Filter ? this.whichPricesToFilter(this.props.brands_to_filter, this.state.filterPrice4) : null}
+        {this.props.price5Filter ? this.whichPricesToFilter(this.props.brands_to_filter, this.state.filterPrice5) : null}
       </div>
     );
   }
