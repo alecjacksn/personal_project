@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 // import Slider from '../components/slider/ImageSlider'
-import { updateProductid, homeButton, shopButton, getUserInfo } from '../ducks/reducer'
+import { updateProductid, homeButton, shopButton, getUserInfo,toggleLeftNavBar } from '../ducks/reducer'
 // import {getUserInfo} from '../ducks/userReducer'
 import { connect } from 'react-redux'
 import 'semantic-ui-css/semantic.min.css'
@@ -47,13 +47,13 @@ class AWS extends Component {
     componentDidMount() { 
         this.props.getUserInfo();
         
-        axios.get('http://localhost:3232/api/products').then(res => {
+        axios.get('/api/products').then(res => {
             this.setState({
                 items: res.data,
 
             })
         })
-        axios.get('http://localhost:3232/api/productimages').then(res => {
+        axios.get('/api/productimages').then(res => {
             this.setState({
                 images: res.data
             })
@@ -101,7 +101,7 @@ class AWS extends Component {
 
 
     // componentDidMount() {
-    //     axios.get('http://localhost:3232/test/amazon').then(res => {
+    //     axios.get('/test/amazon').then(res => {
     //         console.log("component mount: ", res.data[1])
     //         // console.log('books0', res.data[0].Offers[0].Offer[0].OfferListing[0].OfferListingId[0])
     //         this.setState({
@@ -194,7 +194,7 @@ class AWS extends Component {
     //         title: this.state.books[1].ItemAttributes[0].Title[0]
     //     }
     //     console.log(testdata)
-    //     axios.post('http://localhost:3232/api/post', testdata)
+    //     axios.post('/api/post', testdata)
     //         .then(response => {
     //             console.log("Posting Response: ", response)
     //         })
@@ -280,6 +280,17 @@ class AWS extends Component {
     //         )
     //     })
     // }
+    noCatagoriesSelected(){
+        if(this.props.allProducts === false &&
+           this.props.light_bulb === false &&
+           this.props.light_switch === false &&
+           this.props.outlet === false &&
+           this.props.thermostat === false &&
+           this.props.smart_speaker === false
+        ){
+            return this.props.toggleLeftNavBar(false)
+        }
+    }
 
 
     render() {
@@ -300,7 +311,7 @@ class AWS extends Component {
                             <input className="homepage-searchbar" placeholder="Search" />
                             <div className="homepage-login-cart">
             
-                        {this.props.user.id ? <a href='http://localhost:3232/auth/logout'><Button className="cart-button-yo" size="large" animated='vertical'>
+                        {this.props.user.id ? <a href='/auth/logout'><Button className="cart-button-yo" size="large" animated='vertical'>
                                     <Button.Content hidden>Logout</Button.Content>
                                     <Button.Content visible>
                                         Hi {this.props.user.firstname.split(" ")[0]}!
@@ -314,8 +325,8 @@ class AWS extends Component {
                                     </Button.Content>
                                 </Button></a>
                                  }
-                                <div className="login-cart-splitter"></div>
-                                <Link to='/shop'><Button className="cart-button-yo cart-shopall" size="large" >
+                                <div className="login-cart-splitter" ></div>
+                                <Link to='/shop'><Button onClick={() => this.noCatagoriesSelected()} className="cart-button-yo cart-shopall" size="large" >
                                     <Button.Content visible>
                                         Shop
                                 </Button.Content>
@@ -389,7 +400,8 @@ let actionOutputs = {
     updateProductid,
     homeButton,
     shopButton,
-    getUserInfo
+    getUserInfo,
+    toggleLeftNavBar
 }
 
 export default connect(mapStateToProps, actionOutputs)(AWS)

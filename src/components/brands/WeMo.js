@@ -19,14 +19,14 @@ class WeMo extends Component {
 
 
   componentDidMount() {
-    axios.get(`http://localhost:3232/api/brands?${this.state.brand}=${this.state.prodIdClicked}`).then(res => {
+    axios.get(`/api/brands?${this.state.brand}=${this.state.prodIdClicked}`).then(res => {
       console.log("component mount test: ", res)
       this.setState({
         items: res.data,
 
       })
     })
-    axios.get(`http://localhost:3232/api/brands/${this.state.prodIdClicked}/images`).then(res => {
+    axios.get(`/api/brands/${this.state.prodIdClicked}/images`).then(res => {
       console.log("image mount test: ", res.data)
       this.setState({
         images: res.data

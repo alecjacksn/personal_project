@@ -1,13 +1,8 @@
-import * as getItemClicked from '../services/getItem'
-import axios from 'axios'
-import _ from 'underscore-node'
+
+
 // import * as getImageClicked from '../services/getImages'
 
 const initialState = {
-    user: {},
-    productid: '',
-    item: [],
-    images: [],
     loading: false,
 
     price1Filter: false,
@@ -18,38 +13,57 @@ const initialState = {
 
     filterPrice: false,
 
+
+    
+    
     brands_to_filter: [],
     filterBrands: false,
-
+    
+    ready: false,
+    
+    
     allProducts: false,
+    all_products_brands: [],
+    all_products_brands_div: [],
 
-
+// light bulbs
     light_bulb: false,
+    light_bulb_brands: [],
+    light_bulb_brands_div: [],
+
 
     light_switch: false,
+    light_switch_brands: [],
+    light_switch_brands_div: [],
+
 
     outlet: false,
+    outlet_brands: [],
+    outlet_brands_div: [],
 
     thermostat: false,
+    thermostat_brands: [],
+    thermostat_brands_div: [],
 
     smart_speaker: false,
+    smart_speaker_brands: [],
+    smart_speaker_brands_div: [],
 
     left_NavBar: false,
-
+    
     home_page: false,
 
 }
+
+
+const IS_READY = 'IS_READY';
+
 
 const GET_USER_INFO = 'GET_USER_INFO';
 
 const HOME_PAGE = 'HOME_PAGE'
 
 const SHOP_PAGE = 'SHOP_PAGE'
-
-const GET_ITEM = 'GET_ITEM';
-const GET_ITEM_FULFILLED = 'GET_ITEM_FULFILLED';
-const GET_IMAGE = 'GET_IMAGE'
-const GET_IMAGES_FULFILLED = 'GET_IMAGES_FULFILLED';
 
 const PRICE_1_FILTER = 'PRICE_1_FILTER'
 const PRICE_2_FILTER = 'PRICE_2_FILTER'
@@ -69,45 +83,59 @@ const REMOVE_BRANDS_TO_FILTER = 'REMOVE_BRANDS_TO_FILTER'
 
 const UPDATED_PRODUCTID = 'UPDATE_PRODUCTID';
 const SHOW_ALL_PRODUCTS = 'SHOW_ALL_PRODUCTS';
+
+
+
+
+// LIGHT_BULBS 
 const SHOW_ALL_LIGHTS = 'SHOW_ALL_LIGHTS';
+const LIGHT_BULB_BRANDS = 'GET_LIGHT_BULB_BRANDS';
+const LIGHT_BULB_BRANDS_DIV = 'LIGHT_BULB_BRANDS_DIV'
+
+
 const SHOW_ALL_LIGHT_SWITCH = 'SHOW_ALL_LIGHT_SWTICH';
+const LIGHT_SWITCH_BRANDS = 'LIGHT_SWITCH_BRANDS';
+const LIGHT_SWITCH_BRANDS_DIV = 'LIGHT_SWITCH_BRANDS_DIV'
+
+
 const SHOW_ALL_OUTLETS = 'SHOW_ALL_OUTLETS';
+const OUTLET_BRANDS = 'OUTLET_BRANDS';
+const OUTLET_BRANDS_DIV = 'OUTLET_BRANDS_DIV'
+
+
 const SHOW_ALL_THERMOSTATS = 'SHOW_ALL_THERMOSTATS';
+const THERMOSTAT_BRANDS = 'THERMOSTAT_BRANDS';
+const THERMOSTAT_BRANDS_DIV = 'THERMOSTAT_BRANDS_DIV'
+
 const SHOW_ALL_SMART_SPEAKERS = 'SHOW_ALL_SMART_SPEAKERS';
+const SMART_SPEAKER_BRANDS = 'SMART_SPEAKER_BRANDS';
+const SMART_SPEAKER_BRANDS_DIV = 'SMART_SPEAKER_BRANDS_DIV'
 
-const LEFT_NAV_BAR = 'LEFT_NAV_BAR'
-
-
-const FILTER_CLICKED_BRANDS = 'FILTER_CLICKED_BRANDS'
-
-
-
-
-function reducer(state = initialState, action) {
+function leftNavBarReducer(state = initialState, action) {
     var x = state.brands_to_filter
     var q = state.price_to_filter
-    
-    // console.log('TYPE ', action.type)
+    //console.log('TYPE ', action.type)
     // console.log('action.payload: ', action.payload)
     switch (action.type) {
 
-        case GET_USER_INFO + '_FULFILLED':
-            return Object.assign({}, state, { user: action.payload });
 
-        case UPDATED_PRODUCTID:
-            return Object.assign({}, state, { productid: action.payload });
+        case IS_READY:
+            return (Object.assign({}, state, {ready: action.input}))
 
-        case GET_ITEM_FULFILLED:
-            return Object.assign({}, state, { item: action.payload });
+        // LIGHT BULBS
 
-        case GET_IMAGES_FULFILLED:
-            return Object.assign({}, state, { images: action.payload });
-
-        case SHOW_ALL_PRODUCTS:
-            return Object.assign({}, state, { allProducts: action.payload })
 
         case SHOW_ALL_LIGHTS:
             return Object.assign({}, state, { light_bulb: action.payload });
+
+
+        case LIGHT_BULB_BRANDS:
+            return Object.assign({}, state, {light_bulb_brands: action.payload})
+
+        case LIGHT_BULB_BRANDS_DIV:
+            return Object.assign({}, state, {light_bulb_brands_div: action.payload})
+
+
 
         case SHOW_ALL_LIGHT_SWITCH:
             return Object.assign({}, state, { light_switch: action.payload });
@@ -141,12 +169,6 @@ function reducer(state = initialState, action) {
             var p = q.filter(price_to_filter => price_to_filter !== action.payload)
             return Object.assign({}, state, { price_to_filter: p })
 
-
-        case FILTER_CLICKED_BRANDS:
-            var rr = _.difference(x, action.payload)
-            return Object.assign({}, state, {brands_to_filter: rr})
-
-
         case FILTER_PRICE_TF:
             return Object.assign({}, state, { filterPrice: action.payload });
 
@@ -172,12 +194,7 @@ function reducer(state = initialState, action) {
         case SHOP_PAGE:
             return Object.assign({}, state, { left_NavBar: true, home_page: false })
 
-        case LEFT_NAV_BAR:
-            return Object.assign({}, state, { left_NavBar: action.payload })
-
-
-
-
+        
         // case GET_ITEM:
         // return Object.assign({}, state, {item: action.payload})
 
@@ -186,16 +203,7 @@ function reducer(state = initialState, action) {
 
 }
 
-export function getUserInfo() {
-    const userInfo = axios.get('/auth/me').then(res => {
-        console.log("USER REDUCER LOG: ", res.data)
-        return res.data;
-    })
-    return {
-        type: GET_USER_INFO,
-        payload: userInfo
-    }
-}
+
 
 
 
@@ -206,12 +214,6 @@ export function updateProductid(productid) {
     }
 }
 
-export function getItem(productid) {
-    return {
-        type: GET_ITEM,
-        payload: getItemClicked.getItem(productid)
-    }
-}
 
 export function showAllProducts(click) {
     return {
@@ -221,12 +223,41 @@ export function showAllProducts(click) {
 }
 
 
+export function isReady(click){
+    return {
+        type: IS_READY,
+        payload: click
+    }
+}
+
+
+// LIGHT BULBS
+
+
 export function showLights(click) {
     return {
         type: SHOW_ALL_LIGHTS,
         payload: click
     }
 }
+
+
+export function lightBulbBrands(brands){
+    return {
+        type: LIGHT_BULB_BRANDS,
+        payload: brands
+    }
+}
+
+
+export function lightBulbBrandsDiv(div){
+    return {
+        type: LIGHT_BULB_BRANDS_DIV,
+        payload: div
+    }
+}
+
+
 
 
 
@@ -352,20 +383,6 @@ export function shopButton() {
     }
 }
 
-export function toggleLeftNavBar(click) {
-    return {
-        type: LEFT_NAV_BAR,
-        payload: click
-    }
-}
-
-
-export function filterClickedBrands(brands) {
-    return {
-        type: FILTER_CLICKED_BRANDS,
-        payload: brands
-    }
-}
 
 
 
@@ -385,26 +402,4 @@ export function filterClickedBrands(brands) {
 
 
 
-export default reducer
-// componentDidMount() {
-//     axios.get('/api/products/lights/images').then(res => {
-//       this.setState({
-//         images: res.data
-//       })
-//     })
-//     if (this.props.price1Filter) {
-//       axios.get('/api/filterbyprice?producttype=light_bulb').then(res => {
-//         this.setState({
-//           items: res.data,
-
-//         })
-//       })
-//     } else {
-//       axios.get('/api/products/lights').then(res => {
-//         this.setState({
-//           items: res.data,
-
-//         })
-//       })
-//     }
-//   }
+export default leftNavBarReducer

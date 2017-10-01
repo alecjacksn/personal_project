@@ -25,6 +25,10 @@ const app = express();
 app.use(bodyParser.json())
 app.use(cors())
 
+app.use(express.static(__dirname + '/../build'))
+
+
+
 
 massive(process.env.CONNECTIONSTRING).then(db => {
     app.set('db', db);
@@ -65,12 +69,10 @@ passport.use(new Auth0Strategy({
 }));
 
 passport.serializeUser(function (user, done) {
-    console.log('serializeUser', user)
     done(null, user);
 });
 
 passport.deserializeUser(function (user, done) {
-    console.log('DEserializeUser', user)
     // app.get('db').users.find_session_user([user[0].id]).then(user => {
     //     return done(null, user[0]);
     // })
@@ -92,14 +94,13 @@ app.get('/auth/me', (req, res, next) => {
     if (!req.user) {
         return res.status(404).send('User not found');
     } else {
-        console.log("SERVER LOG: ", req.user)
         return res.status(200).send(req.user);
     }
 })
 
 app.get('/auth/logout', (req, res) => {
     req.logOut();
-    return res.redirect(302, 'http://localhost:3000/#/');
+    return res.redirect(302, 'http://localhost:3000/');
 })
 
 // app.get('http://webservices.amazon.com/onca/xml?AWSAccessKeyId=AKIAI27OAG776JDUVLYQ&AssociateTag=personalproje-20&Keywords=smart%20light%20switch&Operation=ItemSearch&ResponseGroup=Images%2CItemAttributes%2CItemIds%2COfferFull%2COfferListings%2COffers%2CReviews&SearchIndex=Electronics&Service=AWSECommerceService&Timestamp=2017-09-11T20%3A16%3A59.000Z&Signature=zystaB9ef%2FQT6OvHqfvIowhPPPk7M2S%2FD2Mh8HNTMyQ%3D'
@@ -249,6 +250,12 @@ app.get('/api/brandnames', (req, res, next) => {
 
 
 ////////////////////////////            FILTER BY PRICE            /////////////////////////////////
+
+app.get('/api/filterallbyprice', (req, res, next) => {
+    req.app.get('db').filterByPrice.allUnder25().then(response => res.status(200).send(response))
+})
+
+
 
 app.get('/api/filterbyprice', (req, res, next) => {
     req.app.get('db').filterByPrice.under25([req.query.producttype]).then(response => res.status(200).send(response))

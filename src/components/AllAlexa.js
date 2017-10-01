@@ -19,14 +19,14 @@ class AllAlexa extends Component {
     componentDidMount() {
 
         console.log("Product Id: ", this.props.productid)
-        axios.get(`http://localhost:3232/api/alexa`)
+        axios.get(`/api/alexa`)
             .then(res => {
                 this.setState({
                     items: res.data
                 })
 
             })
-        axios.get(`http://localhost:3232/api/alexaimages`).then(res => {
+        axios.get(`/api/alexaimages`).then(res => {
             console.log("image mount test: ", res.data)
             this.setState({
                 images: res.data

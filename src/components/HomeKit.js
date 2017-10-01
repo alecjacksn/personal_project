@@ -19,14 +19,14 @@ class HomeKit extends Component {
     componentDidMount() {
 
             console.log("Product Id: ", this.props.productid)
-            axios.get(`http://localhost:3232/api/homekit`)
+            axios.get(`/api/homekit`)
             .then(res => {
                 this.setState({
                     items: res.data
                 })
                 
             })
-            axios.get(`http://localhost:3232/api/homekitimages`).then(res => {
+            axios.get(`/api/homekitimages`).then(res => {
                 console.log("image mount test: ", res.data)
                 this.setState({
                     images: res.data

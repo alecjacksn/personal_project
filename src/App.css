@@ -443,7 +443,7 @@ body {
   width: 100%;
   background: rgba(250,250,250, 1);
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-flow: wrap;
   padding: 35px;
   /* box-shadow: 3px 3px 5px rgba(0,0,0, .53); */
@@ -452,6 +452,7 @@ body {
 .products-Container h3{
   color: rgba(0,0,0, .4);
   margin-bottom: 5px;
+  transition: .2s ease-in-out;
 }
 
 
@@ -461,26 +462,59 @@ body {
   border-top: .5px solid rgba(0,0,0, .23);
   margin-left: 30%;
   margin-right: 30%;
+  transition: .2s ease-in-out;
 }
 
 .products-header{
   text-align: center;
   color: rgba(0,0,0, .2);
+  transition: .2s ease-in-out;
 }
+
+.show-products-shop-section{
+  margin-top: 100px;
+  /* margin-left: 8vw;
+  margin-right: 6.7vw; */
+  margin-left: 8vw;
+  margin-right: 5vw;
+  
+}
+
 
 
 .product-type-box{
   height: 30vh;
   background: white;
   width: 210px;
-  box-shadow: 0px 3px 5px rgba(0,0,0, .23);
-  margin-top: 45px;
-  
+  box-shadow: 1px 2px 7px rgba(0,0,0, .23);
+  margin-top: 40px;
+  margin-right: 40px;
+  transform: scale(1);
+  transition: .2 ease-in-out;
+  border-radius: 5px;
+  /* margin-left: 40px; */
+}
+
+.product-type-box h3, .product-type-box div{
+  opacity: .6;
+}
+
+.product-type-box:hover, .product-type-box:hover h3, .product-type-box:hover div{
+  /* transition: .2s ease-in-out; */
+  cursor: pointer;
+  opacity: 1;
+  color: rgba(0,0,0, .6);
+}
+.product-type-box:hover{
+  transform: scale(1.005);
+  transition: .2s ease-in-out;
+  box-shadow: 1px 3px 12px rgba(0,0,0, .43);
 }
 
 .product-type-box img{ 
+  /* transition: .2s ease-in-out; */
   width: auto;
-  height: 24.5vh;
+  height: 23.5vh;
 }
 
 
@@ -710,6 +744,8 @@ body {
 
 
 /*                LEFT NAV BAR                        */
+
+
 
 label {
   cursor: pointer;

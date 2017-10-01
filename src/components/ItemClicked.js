@@ -26,7 +26,7 @@ class ItemClicked extends Component {
         //     items: this.props.getItem(this.props.productid)
         // })
             console.log("Product Id: ", this.props.productid)
-            axios.get(`http://localhost:3232/api/item/${this.props.match.params.id}`)
+            axios.get(`/api/item/${this.props.match.params.id}`)
             .then(res => {
                 console.log("axios test: ", res.data)
                 this.setState({
@@ -34,7 +34,7 @@ class ItemClicked extends Component {
                 })
                 
             })
-            axios.get(`http://localhost:3232/api/item/image/${this.props.match.params.id}`).then(res => {
+            axios.get(`/api/item/image/${this.props.match.params.id}`).then(res => {
                 console.log("image mount test: ", res.data)
                 this.setState({
                     images: res.data
@@ -94,9 +94,8 @@ class ItemClicked extends Component {
                         </div>
                         {/* price: {e.Offers[0].Offer[0].OfferListing[0].Price[0].FormattedPrice[0]}, */}
                         {/* <img src={e.MediumImage[0].URL} alt="" /><br /> */}
-                        <br />
                         {/* <img src={e.ImageSets[0].ImageSet.URL} alt="" /><br /> */}
-                        <br />
+                        <button>ADD TO CART</button>
                         <br />
                         Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                         <br />
@@ -121,7 +120,7 @@ class ItemClicked extends Component {
                 </div>
                 <br /><br />
                 <br />
-                <br />
+                
             </div>
 
 
