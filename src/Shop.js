@@ -36,6 +36,7 @@ class Shop extends Component {
 
         this.state = {
             books: [],
+            rightAd: true
         }
     }
 
@@ -46,7 +47,8 @@ class Shop extends Component {
             
                 <div className="all-products">
                     <div className="all-products-div">
-
+                    <div className="gap-between-nav">
+                        </div>
                         
                        { this.props.left_NavBar ? <div className="side-bars">
                             <div className="left-test">
@@ -54,13 +56,14 @@ class Shop extends Component {
                                 
                             </div>
                             <div className="listed-products">
-                                <div className="show-search-results">
+                                <div className="listed-products-div">
                                     <Products />
                                 </div>
                             </div>
-                            <div className="side-bar-right-none">
-
-              </div>
+                            {this.state.rightAd ?<div className="side-bar-right">
+                                
+                            <iframe className="right-bar-ad" src="//rcm-na.amazon-adsystem.com/e/cm?o=1&p=14&l=ur1&category=amzn_smp_tkbt_tpr_0917&banner=01NYTVB67JFBC283K2G2&f=ifr&linkID=a10d3dd0f0d0627e45739728767c16fa&t=personalproje-20&tracking_id=personalproje-20" ></iframe>
+              </div> : null}
                         </div>
                         : <div className="show-products-shop-section"><ProductsSection/></div> }
 {/* <script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script> */}

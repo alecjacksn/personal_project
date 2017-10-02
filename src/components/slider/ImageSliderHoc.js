@@ -70,8 +70,6 @@ export default function ImageSliderHoc(Component) {
 
   WrapperComponent.defaultProps = {
     isInfinite: true,
-    
-    visibleItems: 1,
   };
 
   return WrapperComponent;
