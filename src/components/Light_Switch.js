@@ -151,8 +151,8 @@ class Light_Switch extends Component {
                     {e.brand ? 'Brand: ' + e.brand : null}
                     <br />
                     <br />
-                    <br />
                     Price: {e.price}
+                    <br />
                     <br />
                     Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                   </div>
@@ -189,8 +189,8 @@ class Light_Switch extends Component {
                   {e.brand ? 'Brand: ' + e.brand : null}
                   <br />
                   <br />
-                  <br />
                   Price: {e.price}
+                  <br />
                   <br />
                   Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                 </div>
@@ -242,8 +242,8 @@ class Light_Switch extends Component {
                     {e.brand ? 'Brand: ' + e.brand : null}
                     <br />
                     <br />
-                    <br />
                     Price: {e.price}
+                    <br />
                     <br />
                     Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                   </div>
@@ -280,8 +280,8 @@ class Light_Switch extends Component {
                   {e.brand ? 'Brand: ' + e.brand : null}
                   <br />
                   <br />
-                  <br />
                   Price: {e.price}
+                  <br />
                   <br />
                   Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                 </div>

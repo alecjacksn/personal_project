@@ -4,6 +4,9 @@ import _ from 'underscore-node'
 // import * as getImageClicked from '../services/getImages'
 
 const initialState = {
+    cart: '',
+    cart2: 12,
+    cart3: 14,
     user: {},
     productid: '',
     item: [],
@@ -39,6 +42,8 @@ const initialState = {
     home_page: false,
 
 }
+
+const ADD_TO_CART = 'ADD_TO_CART';
 
 const GET_USER_INFO = 'GET_USER_INFO';
 
@@ -87,6 +92,8 @@ function reducer(state = initialState, action) {
     var x = state.brands_to_filter
     var q = state.price_to_filter
     
+    console.log("action", action.type)
+    console.log("paylod", action.payload)
     switch (action.type) {
 
         case GET_USER_INFO + '_FULFILLED':
@@ -174,6 +181,8 @@ function reducer(state = initialState, action) {
             return Object.assign({}, state, { left_NavBar: action.payload })
 
 
+        case ADD_TO_CART: 
+            return Object.assign({}, state, {cart: action.payload})  
 
 
         // case GET_ITEM:
@@ -365,7 +374,12 @@ export function filterClickedBrands(brands) {
     }
 }
 
-
+export function addToCart(item){
+    return {
+        type: ADD_TO_CART,
+        payload: item
+    }
+}
 
 
 // export function getImages(productid) {

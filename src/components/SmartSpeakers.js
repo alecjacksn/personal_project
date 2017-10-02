@@ -178,8 +178,8 @@ componentWillReceiveProps() {
                     {e.brand ? 'Brand: ' + e.brand : null}
                     <br />
                     <br />
-                    <br />
                     Price: {e.price}
+                    <br />
                     <br />
                     Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                   </div>
@@ -216,8 +216,8 @@ componentWillReceiveProps() {
                   {e.brand ? 'Brand: ' + e.brand : null}
                   <br />
                   <br />
-                  <br />
                   Price: {e.price}
+                  <br />
                   <br />
                   Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                 </div>
@@ -269,8 +269,8 @@ componentWillReceiveProps() {
                     {e.brand ? 'Brand: ' + e.brand : null}
                     <br />
                     <br />
-                    <br />
                     Price: {e.price}
+                    <br />
                     <br />
                     Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                   </div>
@@ -307,8 +307,8 @@ componentWillReceiveProps() {
                   {e.brand ? 'Brand: ' + e.brand : null}
                   <br />
                   <br />
-                  <br />
                   Price: {e.price}
+                  <br />
                   <br />
                   Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                 </div>

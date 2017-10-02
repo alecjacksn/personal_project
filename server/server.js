@@ -99,6 +99,7 @@ app.get('/auth/me', (req, res, next) => {
 })
 
 app.get('/auth/logout', (req, res) => {
+    console.log('log out')
     req.logOut();
     return res.redirect(302, 'http://localhost:3000/');
 })

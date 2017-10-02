@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Slider from '../components/slider/ImageSlider'
 import { connect } from 'react-redux'
-import { getItem } from '../ducks/reducer'
+import { getItem, addToCart } from '../ducks/reducer'
 import axios from 'axios'
 import Typekit from 'react-typekit'
 import { Button } from 'semantic-ui-react'
@@ -13,7 +13,8 @@ class ItemClicked extends Component {
         this.state = {
             items: [],
             images: [],
-            asin: ''
+            asin: '',
+            productid: '' 
         }
     }
 
@@ -28,15 +29,17 @@ class ItemClicked extends Component {
 
         axios.get(`/api/item/${this.props.match.params.id}`)
             .then(res => {
-                console.log("axios test: ", res.data)
+                console.log("axios test: ", res.data[0].productid)
                 this.setState({
                     items: res.data,
-                    asin: res.data[0].asin
+                    asin: res.data[0].asin,
+                    productid: res.data[0].productid
+
                 })
 
             })
         axios.get(`/api/item/image/${this.props.match.params.id}`).then(res => {
-            console.log("image mount test: ", res.data)
+            
             this.setState({
                 images: res.data
             })
@@ -44,7 +47,9 @@ class ItemClicked extends Component {
     }
     // console.log("COMP TEST: ", this.state.items)
 
+    addToCartFunction(){
 
+    }
 
     imageFunction(e) {
         var newArray = []
@@ -105,10 +110,10 @@ class ItemClicked extends Component {
                             <div className="single-page-customer-reviews">
                                 Read Customer Reviews <a target="_blank" href={e.customerreview} className="here-button"> HERE</a>
 
-                                {e.size ? 'Size: ' + e.size : null}
+                                {/* {e.size ? 'Size: ' + e.size : null} */}
 
 
-                                {e.warranty ? 'Warranty: ' + e.warranty : null}
+                                {/* {e.warranty ? 'Warranty: ' + e.warranty : null} */}
                                 <br />
 
                             </div>
@@ -162,29 +167,46 @@ class ItemClicked extends Component {
                         </div>
                         <div className="single-page-right-navbar">
                             <div className="right-share-section">
-                                
-                        </div>
+
+                            </div>
                             <div className="single-right-box">
                                 <div className="right-add-cart-section">
                                     <div className="cart-section">
-                                    <a  target="_blank" href={`https://www.amazon.com/Light-Switch-Wi-Fi-enabled-Amazon/dp/${this.state.asin}/ref=sr_1_1?ie=UTF8&qid=1506878792&sr=8-1&keywords=B00DGEGJ02`} className="here-button"><div className="buy-from-amazon"></div></a>
+                                        <a target="_blank" href={`https://www.amazon.com/Light-Switch-Wi-Fi-enabled-Amazon/dp/${this.state.asin}/ref=sr_1_1?ie=UTF8&qid=1506878792&sr=8-1&keywords=B00DGEGJ02`} className="here-button"><div className="buy-from-amazon"></div></a>
                                         <div className="add-to-cart-divider">
-                                        <Button className="add-to-cart" size="small" color='orange'>Add to Cart</Button>
-
-
                                         </div>
+                                        <div className="qty">
+                                            <label htmlFor="quantity"> Qty: </label>
+                                            <select name="quantity" id="quantity">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                    <div className="checkbox-label-checkout">
+                                        <input id="add-echo" type="checkbox" />
+                                        <label className="add-echo-dot" htmlFor="add-echo">Add an Echo Dot for $50</label>
                                     </div>
-                                </div>
-                                <iframe className="right-box-ad" src="//rcm-na.amazon-adsystem.com/e/cm?o=1&p=14&l=ur1&category=amzn_aucc_launch_0927&banner=1TEVC78CN3HNPRV107R2&f=ifr&linkID=41ca0070605a19e7040f15bd03505281&t=personalproje-20&tracking_id=personalproje-20" ></iframe>
-                                <div>
+                                    <div className="add-to-cart-divider">
+                                    </div>
+                                    <Button onClick={() => this.props.addToCart(this.state.productid)}className="add-to-cart" size="small" color='orange'>Add to Cart</Button>
+
 
                                 </div>
+                                    </div>
+                            </div>
+                            <iframe className="right-box-ad" src="//rcm-na.amazon-adsystem.com/e/cm?o=1&p=14&l=ur1&category=amzn_aucc_launch_0927&banner=1TEVC78CN3HNPRV107R2&f=ifr&linkID=41ca0070605a19e7040f15bd03505281&t=personalproje-20&tracking_id=personalproje-20" ></iframe>
+                            <div>
+
                             </div>
                         </div>
                     </div>
-
                 </div>
+
             </div>
+            // </div >
         )
     }
 }
@@ -193,4 +215,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, { getItem })(ItemClicked);
+export default connect(mapStateToProps, { getItem, addToCart })(ItemClicked);

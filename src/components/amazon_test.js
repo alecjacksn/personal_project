@@ -38,8 +38,9 @@ class AWS extends Component {
         this.state = {
             items: [],
             images: [],
-            productidClicked: ''
-
+            productidClicked: '',
+            cart: 1,
+            cartTrue: false
         }
     }
 
@@ -292,6 +293,13 @@ class AWS extends Component {
         }
     }
 
+    componentWillReceiveProps(){
+        if(this.props.cart){
+            this.setState({
+                cartTrue: true
+            })
+        }
+    }
 
     render() {
         // var {updateProductid} = this.props;
@@ -311,7 +319,7 @@ class AWS extends Component {
                             <input className="homepage-searchbar" placeholder="Search" />
                             <div className="homepage-login-cart">
             
-                        {this.props.user.id ? <a href='/auth/logout'><Button className="cart-button-yo" size="large" animated='vertical'>
+                        {this.props.user.id ? <a href='http://localhost:3232/auth/logout'><Button className="cart-button-yo" size="large" animated='vertical'>
                                     <Button.Content hidden>Logout</Button.Content>
                                     <Button.Content visible>
                                         Hi {this.props.user.firstname.split(" ")[0]}!
@@ -332,12 +340,13 @@ class AWS extends Component {
                                 </Button.Content>
                                 </Button> </Link>
                                 <div className="login-cart-splitter"></div>
-                                <Link to='/cart'><Button className="cart-button-yo" size="big">
-                                    
-                                    <Button.Content visible>
-                                        <Icon name='shop' />
-                                    </Button.Content>
-                                </Button>    </Link>
+                                <Link to='/cart'><Button className="cart-button-yo" size="large" animated='vertical'>
+                                <Button.Content hidden>Cart</Button.Content>
+                                <Button.Content visible>
+                                    <Icon name='cart' />
+                                {this.props.cart? <span>{this.state.cart}</span> : null }
+                                </Button.Content>
+                            </Button>   </Link>
                             </div>
                         </div>
 
