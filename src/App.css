@@ -205,7 +205,7 @@ body {
 .header-logo-w {
   position: relative;
   color: rgb(41, 134, 205);
-  font-size: 80px;
+  font-size: 60px;
   font-family: 'Chicle', cursive;
   margin-bottom: 5px;
 }
@@ -329,9 +329,9 @@ body {
 
 
 .home-page-background-grad h1 {
-  padding-top: 270px;
-  padding-left: 170px;
-  font-size: 70px;
+  padding-top: 220px;
+  padding-left: 100px;
+  font-size: 50px;
   color: rgba(0,0,0, .3);
   
   word-spacing: 10px;

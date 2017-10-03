@@ -127,6 +127,9 @@ class Cart extends Component {
         })
     }
 
+    checkoutFunction(){
+        alert("Completed!")
+    }
 
 
     //                      cart 1                              //
@@ -510,7 +513,7 @@ class Cart extends Component {
                                             </div>
                                         </div>
                                         <div>
-                                            <Button className="cart-add-to-cart" size="small" color='orange'>Checkout</Button>
+                                            <Link to='/'><Button onClick={() => {this.props.addToCart(null); this.checkoutFunction()}} className="cart-add-to-cart" size="small" color='orange'>Checkout</Button></Link>
                                         </div>
                                     </div>
                                 </div>

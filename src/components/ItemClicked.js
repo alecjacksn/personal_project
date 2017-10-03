@@ -48,9 +48,16 @@ class ItemClicked extends Component {
     // console.log("COMP TEST: ", this.state.items)
 
     addToCartFunction(){
-
+        var x = this.state.productid
+        if(this.props.user.id){
+            this.props.addToCart(x)
+        } else {
+            this.props.history.push(process.env.REACT_APP_LOGIN)
+        }
     }
 
+
+    
     imageFunction(e) {
         var newArray = []
         var theImages = this.state.images
@@ -191,7 +198,8 @@ class ItemClicked extends Component {
                                     </div>
                                     <div className="add-to-cart-divider">
                                     </div>
-                                    <Button onClick={() => this.props.addToCart(this.state.productid)}className="add-to-cart" size="small" color='orange'>Add to Cart</Button>
+                                    {this.props.user.id ? <Button onClick={() => this.props.addToCart(this.state.productid)}className="add-to-cart" size="small" color='orange'>Add to Cart</Button> :
+                                    <a href={ process.env.REACT_APP_LOGIN }> <Button className="add-to-cart" size="small" color='orange'>Add to Cart</Button> </a>}
 
 
                                 </div>
