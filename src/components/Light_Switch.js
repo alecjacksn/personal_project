@@ -4,9 +4,8 @@ import axios from 'axios'
 import { filterBrandsTF } from '../ducks/reducer'
 import {connect} from 'react-redux'
 import _ from 'underscore-node'
-// import Slider from '../components/slider/ImageSlider'
 import {imageFunction} from '../utilities/imageFunction'
-
+import {displayListings} from '../utilities/displayListings'
 
 class Light_Switch extends Component {
   constructor() {
@@ -103,94 +102,6 @@ class Light_Switch extends Component {
   }
 
 
-  displayListings() {
-    var xLength = this.props.brands_to_filter
-    var pLength = this.props.price_to_filter
-    var display = this.state.items;
-    var brandsFilteredDisplay = _.without(this.props.brands_to_filter, this.state.items)
-
-
-
-    // console.log("TRUE FALSE FILTERED:", brandsFilteredDisplay)
-
-    if (xLength.length < 1) {
-      this.props.filterBrandsTF(false)
-    }
-    if (this.props.filterBrands) {
-      return display.map((e, i) => {
-        if (brandsFilteredDisplay.includes(e.brand)) {
-          return (<div key={i}>
-            <div className="mapped-products">
-              <div>
-                <div className="mapped-info">
-                  <div className="mapped-basic-info">
-                    <div className="mapped-title">
-                      <Link to={`/item/${e.productid}`} ><a href="">{e.title} </a></Link><br />
-                    </div>
-                    <br />
-                    {e.color ? 'Color: ' + e.color : null}
-                    <br />
-                    {e.brand ? 'Brand: ' + e.brand : null}
-                    <br />
-                    <br />
-                    Price: {e.price}
-                    <br />
-                    <br />
-                    Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
-                  </div>
-                  <div className="mapped-image">
-                    {imageFunction(e, this.state.images)}
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
-            <div className="product-bottom-border">
-            </div>
-
-          </div>
-
-
-          )
-        }
-      })
-    } else {
-      return display.map((e, i) => {
-        return (<div key={i}>
-          <div className="mapped-products">
-            <div>
-              <div className="mapped-info">
-                <div className="mapped-basic-info">
-                  <div className="mapped-title">
-                    <Link to={`/item/${e.productid}`} ><a href="">{e.title} </a></Link><br />
-                  </div>
-                  <br />
-                  {e.color ? 'Color: ' + e.color : null}
-                  <br />
-                  {e.brand ? 'Brand: ' + e.brand : null}
-                  <br />
-                  <br />
-                  Price: {e.price}
-                  <br />
-                  <br />
-                  Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
-                </div>
-                <div className="mapped-image">
-                  {imageFunction(e, this.state.images)}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="product-bottom-border">
-          </div>
-        </div>
-        )
-      })
-    }
-  }
-
-
   whichPricesToFilter(brandsToFilter, priceToFilter, ){
     return this.displayListingsByPrice(brandsToFilter, priceToFilter)
   }
@@ -200,9 +111,6 @@ class Light_Switch extends Component {
     var display = priceToFilter;
     var brandsFilteredDisplay = _.without(this.props.brands_to_filter, this.state.items)
 
-
-
-    // console.log("TRUE FALSE FILTERED:", brandsFilteredDisplay)
 
     if (xLength.length < 1) {
       this.props.filterBrandsTF(false)
@@ -299,10 +207,13 @@ class Light_Switch extends Component {
 
 
   render() {
-    const theRender = this.displayListings();
+    const theRender = displayListings(this.props.brands_to_filter,
+                                      this.props.price_to_filter,
+                                      this.state.items,
+                                      this.state.images,
+                                      this.props.filterBrandsTF,
+                                      this.props.filterBrands);
     const testWhat = this.testWhatToDisplay();
-    // const filterByPrice = this.whichPricesToFilter(this.props.brands_to_filter, this.state.priceItems)
-    // const theBrandFilteredRender = this.displayBrandFilteredListings();
     return (
       <div>
         {testWhat ? theRender : null}

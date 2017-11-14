@@ -118,8 +118,6 @@ class Lights extends Component {
 
 
 
-    // console.log("TRUE FALSE FILTERED:", brandsFilteredDisplay)
-
     if (xLength.length < 1) {
       this.props.filterBrandsTF(false)
     }
@@ -221,8 +219,6 @@ class Lights extends Component {
                                       this.props.filterBrands);
 
     const testWhat = this.testWhatToDisplay();
-    // const filterByPrice = this.whichPricesToFilter(this.props.brands_to_filter, this.state.priceItems)
-    // const theBrandFilteredRender = this.displayBrandFilteredListings();
     return (
       <div>
         {testWhat ? theRender : null}

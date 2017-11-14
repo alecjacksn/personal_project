@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import _ from 'underscore-node'
 import { imageFunction } from '../utilities/imageFunction'
 import {displayListings} from '../utilities/displayListings'
+
 class SmartSpeakers extends Component {
   constructor() {
     super()
@@ -21,7 +22,6 @@ class SmartSpeakers extends Component {
       filterPrice5: []
     }
   }
-
 
   componentDidMount() {
     axios.get('/api/products/smart_speaker').then(res => {
