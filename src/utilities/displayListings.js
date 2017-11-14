@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import _ from 'underscore-node'
 import {imageFunction} from './imageFunction'
-import { filterBrandsTF } from '../ducks/reducer'
-import { connect } from 'react-redux'
+
 
 export function displayListings (brands, price, items, images, filterBrandsTF, filterBrands) {
     var xLength = brands
@@ -88,32 +87,4 @@ export function displayListings (brands, price, items, images, filterBrandsTF, f
     }
 }
 
-function mapStateToProps(state) {
-    var {
-      price1Filter,
-      price2Filter,
-      price3Filter,
-      price4Filter,
-      price5Filter,
-      brands_to_filter,
-      filterBrands,
-      brands_to_filter
-    } = state;
-    return {
-      price1Filter,
-      price2Filter,
-      price3Filter,
-      price4Filter,
-      price5Filter,
-      brands_to_filter,
-      filterBrands,
-      brands_to_filter
-    }
-  }
-  
-  
-  let actionOutputs = {
-    filterBrandsTF
-  }
-  
-  export default connect(mapStateToProps, actionOutputs)(displayListings);
+export default displayListings
