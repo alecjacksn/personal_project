@@ -130,7 +130,6 @@ componentWillReceiveProps() {
   }
 
 
-
   render() {
     const theRender = displayListings(this.props.brands_to_filter,
                                       this.props.price_to_filter,
@@ -138,6 +137,7 @@ componentWillReceiveProps() {
                                       this.state.images,
                                       this.props.filterBrandsTF,
                                       this.props.filterBrands);
+                                    
     const testWhat = this.testWhatToDisplay();
 
     return (

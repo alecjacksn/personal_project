@@ -7,6 +7,7 @@ import { filterBrandsTF } from '../ducks/reducer'
 // import Slider from '../components/slider/ImageSlider'
 import {imageFunction} from '../utilities/imageFunction'
 import {displayListings} from '../utilities/displayListings'
+import {displayListingsByPrice} from '../utilities/displayListingsByPrice'
 
 class Lights extends Component {
   constructor() {
@@ -108,91 +109,13 @@ class Lights extends Component {
 
 
   whichPricesToFilter(brandsToFilter, priceToFilter, ){
-    return this.displayListingsByPrice(brandsToFilter, priceToFilter)
-  }
-
-  displayListingsByPrice(brandsToFilter, priceToFilter) {
-    var xLength = brandsToFilter;
-    var display = priceToFilter;
-    var brandsFilteredDisplay = _.without(this.props.brands_to_filter, this.state.items)
-
-
-
-    if (xLength.length < 1) {
-      this.props.filterBrandsTF(false)
-    }
-    if (this.props.filterBrands) {
-      return display.map((e, i) => {
-        if (brandsFilteredDisplay.includes(e.brand)) {
-          return (<div key={i}>
-            <div className="mapped-products">
-              <div>
-                <div className="mapped-info">
-                  <div className="mapped-basic-info">
-                    <div className="mapped-title">
-                      <Link to={`/item/${e.productid}`} ><a href="">{e.title} </a></Link><br />
-                    </div>
-                    <br />
-                    {e.color ? 'Color: ' + e.color : null}
-                    <br />
-                    {e.brand ? 'Brand: ' + e.brand : null}
-                    <br />
-                    <br />
-                    Price: {e.price}
-                    <br />
-                    <br />
-                    Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
-                  </div>
-                  <div className="mapped-image">
-                    {imageFunction(e, this.state.images)}
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
-            <div className="product-bottom-border">
-            </div>
-
-          </div>
-
-
-          )
-        }
-      })
-    } else {
-      return display.map((e, i) => {
-        return (<div key={i}>
-          <div className="mapped-products">
-            <div>
-              <div className="mapped-info">
-                <div className="mapped-basic-info">
-                  <div className="mapped-title">
-                    <Link to={`/item/${e.productid}`} ><a href="">{e.title} </a></Link><br />
-                  </div>
-                  <br />
-                  {e.color ? 'Color: ' + e.color : null}
-                  <br />
-                  {e.brand ? 'Brand: ' + e.brand : null}
-                  <br />
-                  <br />
-                  Price: {e.price}
-                  <br />
-                  <br />
-                  Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
-                </div>
-                <div className="mapped-image">
-                  {imageFunction(e, this.state.images)}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="product-bottom-border">
-          </div>
-        </div>
-        )
-      })
-    }
+    return displayListingsByPrice(brandsToFilter,
+                                  priceToFilter, 
+                                  this.props.brands_to_filter,
+                                  this.state.items,
+                                  this.state.images,
+                                  this.props.filterBrandsTF,
+                                  this.props.filterBrands)
   }
 
 
