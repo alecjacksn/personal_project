@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<!-- saved from url=(0034)http://127.0.0.1:8080/#/packages/1 -->
+<html lang="en" ng-app="devmtnTravel" class="ng-scope"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+    <title>DevMtn Travels</title>
+    
+    <!-- META INFO -->
+    
+    <meta name="description" content="DevMtn Travels app using ui-routes ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--RESET FILE -->
+    <link rel="stylesheet" href="./DevMtn Travels_files/reset.css">
+
+    <!--MAIN FILE-->
+    <link rel="stylesheet" href="./DevMtn Travels_files/styles.css">
+
+    <!-- View Styles -->
+    <link rel="stylesheet" href="./DevMtn Travels_files/about.css">
+    <link rel="stylesheet" href="./DevMtn Travels_files/adventurers.css">
+    <link rel="stylesheet" href="./DevMtn Travels_files/contact.css">
+    <link rel="stylesheet" href="./DevMtn Travels_files/locations.css">
+    <link rel="stylesheet" href="./DevMtn Travels_files/packages.css">
+    <link rel="stylesheet" href="./DevMtn Travels_files/booked.css">
+  </head>
+
+  <body>
+    <main role="main">
+      <section class="home-page-top-container">
+        <header>
+          <nav>
+            <ul>
+              <!--Navigation Section-->
+              <li><a>Locations</a></li>
+              <li><a>Packages</a></li>
+              <li><a><img src="./DevMtn Travels_files/DevCircleWhite.svg" alt="DevMountain Logo"></a></li>
+              <li><a>About</a></li>
+              <li><a>Contact</a></li>
+            </ul>
+          </nav>
+        </header>
+        <h1 class="intro-text">Discover</h1>
+      </section>
+
+      <!-- Here we are placing the ui-view tag this is where our views will be injected when we change routes. -->
+
+      <!-- uiView: undefined --><ui-view class="ng-scope"><section class="packages-main ng-scope">
+  <section class="package-card ng-binding">
+    <img ng-src="" alt="">
+    {{test}}
+    <h6> <!--The city name goes here--> </h6>
+    <h1><!--The country name goes here--></h1>
+    <p><!--The description goes here--></p>
+    <h3>$<!--The package price goes here--></h3>
+
+    <!--This button needs a ui-sref that points to booked-->
+    <button ui-sref="booked">Book Now</button>
+  </section>
+</section></ui-view>
+
+    </main>
+
+    <!-- Including angular and ui-router then our javascript files. ORDER MATTERS -->
+    <script src="./DevMtn Travels_files/angular.js"></script>
+    <script src="./DevMtn Travels_files/angular-ui-router.js"></script>
+    <script src="./DevMtn Travels_files/locationsCtrl.js"></script>
+    <script src="./DevMtn Travels_files/packagesCtrl.js"></script>
+    <script src="./DevMtn Travels_files/bookedCtrl.js"></script>
+    <!--Our Custom Script Files-->
+    <script src="./DevMtn Travels_files/app.js"></script>
+  <!-- Code injected by live-server -->
+<script type="text/javascript">
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function() {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					head.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					head.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function(msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			console.log('Live reload enabled.');
+		})();
+	}
+	// ]]>
+</script>
+
+
+</body></html>

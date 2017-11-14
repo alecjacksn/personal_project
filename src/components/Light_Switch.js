@@ -5,7 +5,7 @@ import { filterBrandsTF } from '../ducks/reducer'
 import {connect} from 'react-redux'
 import _ from 'underscore-node'
 // import Slider from '../components/slider/ImageSlider'
-
+import {imageFunction} from '../utilities/imageFunction'
 
 
 class Light_Switch extends Component {
@@ -74,24 +74,6 @@ class Light_Switch extends Component {
     }
   }
 
-
-
-
-
-  imageFunction(e) {
-    // var newArray = []
-    var theImages = this.state.images
-    for (var i = 0; i < theImages.length; i++) {
-      if (theImages[i].prodid === e.productid) {
-        var x = <Link to={`/item/${e.productid}`} ><a href=""><img className="display-images" src={theImages[i].largeimage} alt="" /></a></Link>
-        // newArray.push(theImages[i])
-      }
-    }
-    return (x)
-  }
-
-
-
   componentWillReceiveProps() {
     axios.get('/api/filterbyprice?producttype=light_switch').then(res => {
       this.setState({
@@ -157,7 +139,7 @@ class Light_Switch extends Component {
                     Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                   </div>
                   <div className="mapped-image">
-                    {this.imageFunction(e)}
+                    {imageFunction(e, this.state.images)}
                   </div>
                 </div>
 
@@ -195,7 +177,7 @@ class Light_Switch extends Component {
                   Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                 </div>
                 <div className="mapped-image">
-                  {this.imageFunction(e)}
+                  {imageFunction(e, this.state.images)}
                 </div>
               </div>
             </div>
@@ -248,7 +230,7 @@ class Light_Switch extends Component {
                     Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                   </div>
                   <div className="mapped-image">
-                    {this.imageFunction(e)}
+                    {imageFunction(e, this.state.images)}
                   </div>
                 </div>
 
@@ -286,7 +268,7 @@ class Light_Switch extends Component {
                   Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                 </div>
                 <div className="mapped-image">
-                  {this.imageFunction(e)}
+                  {imageFunction(e, this.state.images)}
                 </div>
               </div>
             </div>

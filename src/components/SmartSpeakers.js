@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { filterBrandsTF } from '../ducks/reducer'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import _ from 'underscore-node'
-
-
+import { imageFunction } from '../utilities/imageFunction'
+import {displayListings} from '../utilities/displayListings'
 class SmartSpeakers extends Component {
   constructor() {
     super()
@@ -73,77 +73,32 @@ class SmartSpeakers extends Component {
   }
 
 
-  // productClicked(e){
-  //   this.setState({
-  //     prodIdClicked: e.target.value
-  //   })
-  // }
-
-//   displayBrands() {
-//     var newArray = []
-//     var display = this.state.brandNames
-//     for (var i = 0; i < display.length; i++) {
-//         if (!newArray.includes(display[i].brand)) {
-//             newArray.push(display[i].brand)
-//         }
-//     }
-//     console.log("new ArRrayy: ", newArray)
-
-
-
-//     this.setState({
-//         redirect: false
-//     })
-//     return newArray.map((e, i) => {
-//        return(<div key={i} className="checkbox-label">
-//             <input type="checkbox" className="wemo-brand-search" />
-//             <label htmlFor="wemo-brand-search">{newArray[i]} </label>
-//         </div>)
-//     })
-// }
-
-componentWillReceiveProps() {
-  axios.get('/api/filterbyprice?producttype=smart_speaker').then(res => {
-    this.setState({
-      priceItems: res.data,
+  componentWillReceiveProps() {
+    axios.get('/api/filterbyprice?producttype=smart_speaker').then(res => {
+      this.setState({
+        priceItems: res.data,
+      })
     })
-  })
-  axios.get('/api/filterbyprice25?producttype=smart_speaker').then(res => {
-    this.setState({
-      filterPrice2: res.data,
+    axios.get('/api/filterbyprice25?producttype=smart_speaker').then(res => {
+      this.setState({
+        filterPrice2: res.data,
+      })
     })
-  })
-  axios.get('/api/filterbyprice50?producttype=smart_speaker').then(res => {
-    this.setState({
-      filterPrice3: res.data,
+    axios.get('/api/filterbyprice50?producttype=smart_speaker').then(res => {
+      this.setState({
+        filterPrice3: res.data,
+      })
     })
-  })
-  axios.get('/api/filterbyprice100?producttype=smart_speaker').then(res => {
-    this.setState({
-      filterPrice4: res.data,
+    axios.get('/api/filterbyprice100?producttype=smart_speaker').then(res => {
+      this.setState({
+        filterPrice4: res.data,
+      })
     })
-  })
-  axios.get('/api/filterbyprice200?producttype=smart_speaker').then(res => {
-    this.setState({
-      filterPrice5: res.data,
+    axios.get('/api/filterbyprice200?producttype=smart_speaker').then(res => {
+      this.setState({
+        filterPrice5: res.data,
+      })
     })
-  })
-}
-
-
-
-
-
-  imageFunction(e) {
-    // var newArray = []
-    var theImages = this.state.images
-    for (var i = 0; i < theImages.length; i++) {
-      if (theImages[i].prodid === e.productid) {
-        var x = <Link to={`/item/${e.productid}`} ><a href=""><img className="display-images" src={theImages[i].largeimage} alt="" /></a></Link>
-        // newArray.push(theImages[i])
-      }
-    }
-    return (x)
   }
 
 
@@ -184,7 +139,7 @@ componentWillReceiveProps() {
                     Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                   </div>
                   <div className="mapped-image">
-                    {this.imageFunction(e)}
+                    {imageFunction(e, this.state.images)}
                   </div>
                 </div>
 
@@ -222,7 +177,7 @@ componentWillReceiveProps() {
                   Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                 </div>
                 <div className="mapped-image">
-                  {this.imageFunction(e)}
+                  {imageFunction(e, this.state.images)}
                 </div>
               </div>
             </div>
@@ -236,7 +191,7 @@ componentWillReceiveProps() {
   }
 
 
-  whichPricesToFilter(brandsToFilter, priceToFilter, ){
+  whichPricesToFilter(brandsToFilter, priceToFilter, ) {
     return this.displayListingsByPrice(brandsToFilter, priceToFilter)
   }
 
@@ -275,7 +230,7 @@ componentWillReceiveProps() {
                     Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                   </div>
                   <div className="mapped-image">
-                    {this.imageFunction(e)}
+                    {imageFunction(e, this.state.images)}
                   </div>
                 </div>
 
@@ -313,7 +268,7 @@ componentWillReceiveProps() {
                   Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                 </div>
                 <div className="mapped-image">
-                  {this.imageFunction(e)}
+                  {imageFunction(e, this.state.images)}
                 </div>
               </div>
             </div>
@@ -327,14 +282,14 @@ componentWillReceiveProps() {
   }
 
 
-  testWhatToDisplay(){
-    if(
+  testWhatToDisplay() {
+    if (
       this.props.price1Filter === false &&
       this.props.price2Filter === false &&
       this.props.price3Filter === false &&
       this.props.price4Filter === false &&
-      this.props.price5Filter === false 
-    ){
+      this.props.price5Filter === false
+    ) {
       return true
     } else {
       return false
@@ -344,7 +299,12 @@ componentWillReceiveProps() {
 
 
   render() {
-    const theRender = this.displayListings();
+    const theRender = displayListings(this.props.brands_to_filter,
+                                      this.props.price_to_filter,
+                                      this.state.items,
+                                      this.state.images,
+                                      this.props.filterBrandsTF,
+                                      this.props.filterBrands);
     const testWhat = this.testWhatToDisplay();
     // const filterByPrice = this.whichPricesToFilter(this.props.brands_to_filter, this.state.priceItems)
     // const theBrandFilteredRender = this.displayBrandFilteredListings();

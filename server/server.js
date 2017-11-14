@@ -380,12 +380,12 @@ app.get('/api/filterbyprice200', (req, res, next) => {
 
 
 //\\
-// \\                                                                    //
-//  \\                                                                  //
-//                       AMAZON SEARCH API                         //
+// \\                                                                 //
+//  \\                                                               //
+//                       AMAZON SEARCH API                          //
 //                                                                  \\
+//                                                                   \\
 //                                                                    \\
-//                                                                      \\
 
 
 

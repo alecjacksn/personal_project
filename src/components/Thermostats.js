@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { filterBrandsTF, filterClickedBrands } from '../ducks/reducer'
 import { connect } from 'react-redux'
 import _ from 'underscore-node'
-
+import {imageFunction} from '../utilities/imageFunction'
 
 class Thermostat extends Component {
   constructor() {
@@ -102,20 +102,6 @@ class Thermostat extends Component {
   }
 
 
-  imageFunction(e) {
-    // var newArray = []
-    var theImages = this.state.images
-    for (var i = 0; i < theImages.length; i++) {
-      if (theImages[i].prodid === e.productid) {
-        var x = <Link to={`/item/${e.productid}`} ><a href=""><img className="display-images" src={theImages[i].largeimage} alt="" /></a></Link>
-        // newArray.push(theImages[i])
-      }
-    }
-    return (x)
-  }
-
-
-
   displayListings() {
     var xLength = this.props.brands_to_filter
     var pLength = this.props.price_to_filter
@@ -152,7 +138,7 @@ class Thermostat extends Component {
                     Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                   </div>
                   <div className="mapped-image">
-                    {this.imageFunction(e)}
+                    {imageFunction(e, this.state.images)}
                   </div>
                 </div>
 
@@ -190,7 +176,7 @@ class Thermostat extends Component {
                   Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                 </div>
                 <div className="mapped-image">
-                  {this.imageFunction(e)}
+                  {imageFunction(e, this.state.images)}
                 </div>
               </div>
             </div>
@@ -243,7 +229,7 @@ class Thermostat extends Component {
                     Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                   </div>
                   <div className="mapped-image">
-                    {this.imageFunction(e)}
+                    {imageFunction(e, this.state.images)}
                   </div>
                 </div>
 
@@ -281,7 +267,7 @@ class Thermostat extends Component {
                   Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                 </div>
                 <div className="mapped-image">
-                  {this.imageFunction(e)}
+                  {imageFunction(e, this.state.images)}
                 </div>
               </div>
             </div>

@@ -5,8 +5,8 @@ import { connect } from 'react-redux'
 import _ from 'underscore-node'
 import { filterBrandsTF } from '../ducks/reducer'
 // import Slider from '../components/slider/ImageSlider'
-
-
+import {imageFunction} from '../utilities/imageFunction'
+import {displayListings} from '../utilities/displayListings'
 
 class Lights extends Component {
   constructor() {
@@ -77,18 +77,6 @@ class Lights extends Component {
 
 
 
-  imageFunction(e) {
-    // var newArray = []
-    var theImages = this.state.images
-    for (var i = 0; i < theImages.length; i++) {
-      if (theImages[i].prodid === e.productid) {
-        var x = <Link to={`/item/${e.productid}`} ><img className="display-images" src={theImages[i].largeimage} alt="" /></Link>
-        // newArray.push(theImages[i])
-      }
-    }
-    return (x)
-  }
-
 
   componentWillReceiveProps() {
     axios.get('/api/filterbyprice?producttype=light_bulb').then(res => {
@@ -116,97 +104,6 @@ class Lights extends Component {
         filterPrice5: res.data,
       })
     })
-  }
-
-
-
-
-
-  displayListings() {
-    var xLength = this.props.brands_to_filter
-    var pLength = this.props.price_to_filter
-    var display = this.state.items;
-    var brandsFilteredDisplay = _.without(this.props.brands_to_filter, this.state.items)
-
-
-
-    // console.log("TRUE FALSE FILTERED:", brandsFilteredDisplay)
-
-    if (xLength.length < 1) {
-      this.props.filterBrandsTF(false)
-    }
-    if (this.props.filterBrands) {
-      return display.map((e, i) => {
-        if (brandsFilteredDisplay.includes(e.brand)) {
-          return (<div key={i}>
-            <div className="mapped-products">
-              <div>
-                <div className="mapped-info">
-                  <div className="mapped-basic-info">
-                    <div className="mapped-title">
-                      <Link to={`/item/${e.productid}`} ><a href="">{e.title} </a></Link><br />
-                    </div>
-                    <br />
-                    {e.color ? 'Color: ' + e.color : null}
-                    <br />
-                    {e.brand ? 'Brand: ' + e.brand : null}
-                    <br />
-                    <br />
-                    Price: {e.price}
-                    <br />
-                    <br />
-                    Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
-                  </div>
-                  <div className="mapped-image">
-                    {this.imageFunction(e)}
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
-            <div className="product-bottom-border">
-            </div>
-
-          </div>
-
-
-          )
-        }
-      })
-    } else {
-      return display.map((e, i) => {
-        return (<div key={i}>
-          <div className="mapped-products">
-            <div>
-              <div className="mapped-info">
-                <div className="mapped-basic-info">
-                  <div className="mapped-title">
-                    <Link to={`/item/${e.productid}`} ><a href="">{e.title} </a></Link><br />
-                  </div>
-                  <br />
-                  {e.color ? 'Color: ' + e.color : null}
-                  <br />
-                  {e.brand ? 'Brand: ' + e.brand : null}
-                  <br />
-                  <br />
-                  Price: {e.price}
-                  <br />
-                  <br />
-                  Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
-                </div>
-                <div className="mapped-image">
-                  {this.imageFunction(e)}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="product-bottom-border">
-          </div>
-        </div>
-        )
-      })
-    }
   }
 
 
@@ -249,7 +146,7 @@ class Lights extends Component {
                     Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                   </div>
                   <div className="mapped-image">
-                    {this.imageFunction(e)}
+                    {imageFunction(e, this.state.images)}
                   </div>
                 </div>
 
@@ -287,7 +184,7 @@ class Lights extends Component {
                   Read Customer Reviews <a target="_blank" href={e.customerreview}>HERE</a>
                 </div>
                 <div className="mapped-image">
-                  {this.imageFunction(e)}
+                  {imageFunction(e, this.state.images)}
                 </div>
               </div>
             </div>
@@ -315,10 +212,14 @@ class Lights extends Component {
     }
   }
 
-
-
   render() {
-    const theRender = this.displayListings();
+    const theRender = displayListings(this.props.brands_to_filter,
+                                      this.props.price_to_filter,
+                                      this.state.items,
+                                      this.state.images,
+                                      this.props.filterBrandsTF,
+                                      this.props.filterBrands);
+
     const testWhat = this.testWhatToDisplay();
     // const filterByPrice = this.whichPricesToFilter(this.props.brands_to_filter, this.state.priceItems)
     // const theBrandFilteredRender = this.displayBrandFilteredListings();
