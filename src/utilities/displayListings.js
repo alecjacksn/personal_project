@@ -18,7 +18,7 @@ export function displayListings (brands, price, items, images, filterBrandsTF, f
             if (brandsFilteredDisplay.includes(e.brand)) {
                 return (<div key={i}>
                     <div className="mapped-products">
-                        <div>
+                        <div className="products-div-container">
                             <div className="mapped-info">
                                 <div className="mapped-basic-info">
                                     <div className="mapped-title">

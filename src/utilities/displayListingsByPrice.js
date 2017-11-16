@@ -19,7 +19,7 @@ export function displayListingsByPrice(brandsToFilter, priceToFilter, brands, it
         if (brandsFilteredDisplay.includes(e.brand)) {
           return (<div key={i}>
             <div className="mapped-products">
-              <div>
+              <div className="products-div-container">
                 <div className="mapped-info">
                   <div className="mapped-basic-info">
                     <div className="mapped-title">
