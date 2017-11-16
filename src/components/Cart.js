@@ -126,10 +126,6 @@ class Cart extends Component {
 
     render() {
         let theRender = this.displayListings()
-        // let theRender2 = this.displayListings2()
-        // let theRender3 = this.displayListings3()
-        // let theRender4 = this.displayListings4()
-        // let theRender5 = this.displayListings5()
         return (
             <div className="cart-item-page-container">
 
@@ -138,10 +134,6 @@ class Cart extends Component {
 
                         <div className="cart-item-page-item">
                             {theRender}
-                            {/* {theRender2} */}
-                            {/* {theRender3} */}
-                            {/* {theRender4} */}
-                            {/* {theRender5} */}
                         </div>
                     </div>
                     <div className="cart-page-right-navbar">

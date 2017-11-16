@@ -45,7 +45,6 @@ class ItemClicked extends Component {
             })
         })
     }
-    // console.log("COMP TEST: ", this.state.items)
 
     addToCartFunction(){
         var x = this.state.productid
@@ -141,24 +140,13 @@ class ItemClicked extends Component {
                 </div>
                 <br /> <br />
                 <br />
-
             </div >
-
-
             )
         })
-
     }
-
-
 
     render() {
         let theRender = this.displayListings()
-        // this.setState({
-        //     item: this.props.item
-        // })
-
-
         return (
             <div className="single-item-page-container">
 
